@@ -1,0 +1,69 @@
+.manager-entries {
+  height: 100vh;
+
+  &__sider {
+    background: #f9f9f9;
+    border-right: 1px solid #eee;
+
+    .ant-menu {
+      border-right: none;
+      padding: 20px 0;
+    }
+  }
+}
+
+.entries-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entries-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+
+  label {
+    font-weight: 500;
+  }
+
+  .ant-input {
+    border-radius: 4px;
+  }
+
+  button {
+    background: #28a745;
+    border: none;
+    font-weight: 500;
+
+    &:hover {
+      background: #2ebf4f !important;
+    }
+  }
+}
+
+.entries-list {
+  margin-top: 20px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ant-table {
+    border: 1px solid #eee;
+  }
+
+  .ant-table-thead > tr > th {
+    background: #f9f9f9;
+    font-weight: 600;
+  }
+}

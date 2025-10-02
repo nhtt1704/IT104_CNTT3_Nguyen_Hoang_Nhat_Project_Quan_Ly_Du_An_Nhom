@@ -1,0 +1,54 @@
+.manager-user {
+  height: 100vh;
+
+  &__sider {
+    background: #f9f9f9;
+    border-right: 1px solid #eee;
+
+    .ant-menu {
+      border-right: none;
+      padding: 20px 0;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+
+      span {
+        font-size: 14px;
+        color: #888;
+        margin-left: 6px;
+      }
+    }
+  }
+}
+
+.ant-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+
+  .ant-pagination-prev {
+    position: absolute;
+    left: 0;
+  }
+
+  .ant-pagination-next {
+    position: absolute;
+    right: 0;
+  }
+
+  .ant-pagination-item {
+    margin: 0 4px;
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Olivia Rhye",
+      "username": "@olivia",
+      "email": "olivia@untitledui.com",
+      "status": "hoạt động",
+      "avatar": "https://i.pravatar.cc/40?img=1"
+    },
+    {
+      "id": 2,
+      "name": "Phoenix Baker",
+      "username": "@phoenix",
+      "email": "phoenix@untitledui.com",
+      "status": "hoạt động",
+      "avatar": "https://i.pravatar.cc/40?img=2"
+    },
+    {
+      "id": 3,
+      "name": "Lana Steiner",
+      "username": "@lana",
+      "email": "lana@untitledui.com",
+      "status": "hoạt động",
+      "avatar": "https://i.pravatar.cc/40?img=3"
+    }
+  ],
+  "entries": [
+    {
+      "id": 2,
+      "name": "Health"
+    },
+    {
+      "id": 3,
+      "name": "Education"
+    },
+    {
+      "id": 1759389981233,
+      "name": "Technology"
+    }
+  ]
+}
