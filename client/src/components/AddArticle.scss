@@ -1,0 +1,48 @@
+.add-article {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px 30px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #eee;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h4 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .add-article__close {
+      font-size: 18px;
+      cursor: pointer;
+      color: #666;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  .ant-form-item-label > label {
+    font-weight: 500;
+  }
+
+  .ant-upload-drag {
+    border-radius: 6px;
+  }
+
+  button {
+    border-radius: 6px;
+    background-color: #28a745;
+    border: none;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+}
