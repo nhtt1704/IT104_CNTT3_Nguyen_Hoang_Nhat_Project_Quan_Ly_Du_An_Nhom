@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import "./ArticleDetails.scss";
 
-function PostDetail() {
+function ArticleDetails() {
   const comments = [
     {
       id: 1,
@@ -86,4 +86,4 @@ function PostDetail() {
   );
 }
 
-export default PostDetail;
+export default ArticleDetails;

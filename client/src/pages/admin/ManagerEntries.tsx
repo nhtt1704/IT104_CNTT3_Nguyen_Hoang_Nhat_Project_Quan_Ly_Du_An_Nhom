@@ -45,14 +45,12 @@ const ManagerEntries: React.FC = () => {
     fetchEntries();
   };
 
-  // mở modal sửa
   const handleEdit = (record: Entry) => {
     setEditingEntry(record);
     form.setFieldsValue({ name: record.name });
     setIsModalOpen(true);
   };
 
-  // lưu khi sửa
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
@@ -140,7 +138,6 @@ const ManagerEntries: React.FC = () => {
             />
           </div>
 
-          {/* Modal edit */}
           <Modal
             title="Edit Category"
             open={isModalOpen}

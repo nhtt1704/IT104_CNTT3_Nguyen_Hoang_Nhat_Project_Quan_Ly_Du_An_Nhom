@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input, Button } from "antd";
 import "./Register.scss"
 
-function RegisterForm() {
+function Register() {
   return (
     <div className="register-page">
       <div className="register-container">
@@ -71,4 +71,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default Register;

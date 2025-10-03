@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import "./Login.scss";
 
-function LoginForm() {
+function Login() {
   return (
     <div className="login-page">
       <div className="login-container">
@@ -74,4 +74,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default Login;

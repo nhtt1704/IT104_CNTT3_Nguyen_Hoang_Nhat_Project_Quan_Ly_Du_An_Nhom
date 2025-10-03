@@ -8,6 +8,8 @@ import ArticleDetails from './components/ArticleDetails'
 import ManagerUser from './pages/admin/ManagerUser'
 import AdminHeader from './pages/admin/AdminHeader'
 import ManagerEntries from './pages/admin/ManagerEntries'
+import {RouterProvider} from 'react-router-dom'
+import {routers} from './routers/router'
 
 export default function App() {
   return (
@@ -21,6 +23,7 @@ export default function App() {
       {/* <AdminHeader/> */}
       {/* <ManagerUser/> */}
       {/* <ManagerEntries /> */}
+      <RouterProvider router={routers}/>
     </div>
   )
 }
