@@ -8,6 +8,7 @@ import ManagerEntries from '../pages/admin/ManagerEntries'
 import AddArticle from '../components/AddArticle'
 import ArticleDetails from '../components/ArticleDetails'
 import Home from '../components/Home'
+import AllMyPosts from '../components/AllMyPosts'
 
 export const routers = createBrowserRouter([
     {
@@ -37,6 +38,9 @@ export const routers = createBrowserRouter([
     {
         path: "/home",
         element:<Home></Home>
+    },
+    {
+        path: "/allMyPosts",
+        element:<AllMyPosts></AllMyPosts>
     }
-
 ])

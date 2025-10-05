@@ -38,5 +38,55 @@
       "id": 1759453262099,
       "name": "Heath"
     }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "A Productive Day at Work",
+      "date": "2023-02-25",
+      "category": "Daily Journal",
+      "description": "Today was a really productive day at work. I managed to finish a report ahead of schedule and received positive feedback from my manager.",
+      "image": "/images/work.jpg"
+    },
+    {
+      "id": 2,
+      "title": "My First Job Interview Experience",
+      "date": "2023-02-24",
+      "category": "Work & Career",
+      "description": "I had my first job interview today! I was nervous at first, but as the conversation went on, I felt more confident.",
+      "image": "/images/interview.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Overthinking Everything",
+      "date": "2023-02-23",
+      "category": "Personal Thoughts",
+      "description": "Lately, I have been overthinking everything, from small decisions to bigger life choices. I know I should trust myself.",
+      "image": "/images/desk.jpg"
+    },
+    {
+      "id": 4,
+      "title": "How collaboration makes us better designers",
+      "date": "2023-02-19",
+      "category": "Work & Career",
+      "description": "Collaboration can make our teams stronger and our individual designs better.",
+      "image": "/images/design.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Our top 10 Javascript frameworks to use",
+      "date": "2023-02-16",
+      "category": "Work & Career",
+      "description": "JavaScript frameworks make development easy with extensive features and functionalities.",
+      "image": "/images/js.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Podcast: Creating a better CX Community",
+      "date": "2023-02-06",
+      "category": "Emotions & Feelings",
+      "description": "Starting a community doesn't need to be complicated, but how do you get started?",
+      "image": "/images/podcast.jpg"
+    }
   ]
 }

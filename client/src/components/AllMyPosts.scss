@@ -1,0 +1,63 @@
+.mypost-layout {
+  padding: 40px;
+  background: #fff;
+
+  .add-article {
+    text-align: center;
+    color: #4f46e5;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+      transform: scale(1.02);
+    }
+  }
+
+  .post-card {
+    border-radius: 12px;
+    overflow: hidden;
+
+    .ant-card-cover img {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .date {
+      display: block;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .category {
+      color: #4f46e5;
+      font-weight: 500;
+    }
+
+    .edit-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: #e11d48;
+      font-weight: 500;
+      transition: 0.2s;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+  }
+}
