@@ -6,6 +6,7 @@ import {
   LinkedinOutlined,
 } from "@ant-design/icons";
 import "./Login.scss";
+import a from "./a6f14c1fa6846f29f11dc2e85f40b29fbcc92d57.png"
 
 function Login() {
   return (
@@ -13,7 +14,7 @@ function Login() {
       <div className="login-container">
         <div className="login-left">
           <img
-            src="https://img.freepik.com/free-vector/business-contract-illustration_23-2148758656.jpg"
+            src={a}
             alt="login"
           />
         </div>

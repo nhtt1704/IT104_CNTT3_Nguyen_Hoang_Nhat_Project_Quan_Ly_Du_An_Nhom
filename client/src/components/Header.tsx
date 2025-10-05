@@ -23,8 +23,8 @@ function Header() {
       </div>
 
       <div className="header__auth">
-        <Button type="default">Sign Up</Button>
-        <Button type="primary">Sign In</Button>
+        <Button type="default" href="/register">Sign Up</Button>
+        <Button type="primary" href="/login">Sign In</Button>
       </div>
     </div>
   );
