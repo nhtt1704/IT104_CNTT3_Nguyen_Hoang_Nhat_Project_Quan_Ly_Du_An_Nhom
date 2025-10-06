@@ -10,6 +10,7 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import axios from "axios";
 import "./ManagerUser.scss";
+import { Link } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 
@@ -100,22 +101,37 @@ const ManagerUser: React.FC = () => {
 
   return (
     <Layout className="manager-user">
-      <Sider width={200} className="manager-user__sider">
-        <Menu mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            Manage Users
-          </Menu.Item>
-          <Menu.Item key="2" icon={<FileTextOutlined />}>
-            Manage Entries
-          </Menu.Item>
-          <Menu.Item key="3" icon={<FileAddOutlined />}>
-            Manage Article
-          </Menu.Item>
-          <Menu.Item key="4" icon={<LogoutOutlined />}>
-            Log out
-          </Menu.Item>
-        </Menu>
-      </Sider>
+<Sider width={220} className="manager-user__sider">
+  <div className="sidebar-menu">
+    <Link to="/manageUsers" className="menu-item active">
+      <div className="icon-box">
+        <UserOutlined className="icon" />
+      </div>
+      <span>Manage Users</span>
+    </Link>
+
+    <Link to="/manageEntries" className="menu-item">
+      <div className="icon-box">
+        <FileTextOutlined className="icon" />
+      </div>
+      <span>Manage Entries</span>
+    </Link>
+
+    <Link to="/manageArticle" className="menu-item">
+      <div className="icon-box">
+        <FileAddOutlined className="icon" />
+      </div>
+      <span>Manage Article</span>
+    </Link>
+
+    <Link to="/login" className="menu-item logout">
+      <div className="icon-box">
+        <LogoutOutlined className="icon" />
+      </div>
+      <span>Log out</span>
+    </Link>
+  </div>
+</Sider>
 
       <Layout style={{ padding: "24px" }}>
         <Content>

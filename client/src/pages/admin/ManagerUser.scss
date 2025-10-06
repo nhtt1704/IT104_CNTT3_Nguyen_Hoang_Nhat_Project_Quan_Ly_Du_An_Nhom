@@ -1,13 +1,81 @@
 .manager-user {
   height: 100vh;
+  background: #fff;
+  display: flex;
 
   &__sider {
-    background: #f9f9f9;
+    background: #ffffff;
     border-right: 1px solid #eee;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
+  }
 
-    .ant-menu {
-      border-right: none;
-      padding: 20px 0;
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #f4f6ff;
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+
+    .icon-box {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: #e0e7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .icon {
+        color: #3b82f6;
+        font-size: 16px;
+      }
+    }
+
+    &:hover {
+      background-color: #e0e7ff;
+      transform: translateX(3px);
+    }
+
+    &.active {
+      background-color: #dbeafe;
+      font-weight: 600;
+
+      .icon-box {
+        background-color: #c7d2fe;
+      }
+    }
+
+    &.logout {
+      background-color: #f0f9ff;
+      color: #0f172a;
+
+      .icon-box {
+        background-color: #e0f2fe;
+
+        .icon {
+          color: #1e3a8a;
+        }
+      }
+
+      &:hover {
+        background-color: #dbeafe;
+      }
     }
   }
 
@@ -30,6 +98,7 @@
   }
 }
 
+/* Giữ phần pagination như cũ */
 .ant-pagination {
   display: flex;
   align-items: center;
