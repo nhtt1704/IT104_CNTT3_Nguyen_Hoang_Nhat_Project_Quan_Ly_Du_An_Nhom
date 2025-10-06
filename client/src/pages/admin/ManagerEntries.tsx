@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input, Layout, Menu, Table, Modal, Form } from "antd";
+import {
+  Button,
+  Input,
+  Layout,
+  Table,
+  Modal,
+  Form,
+} from "antd";
 import {
   UserOutlined,
   FileTextOutlined,
   FileAddOutlined,
   LogoutOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import "./ManagerEntries.scss";
+import { Link } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 
@@ -22,6 +31,7 @@ const ManagerEntries: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
   const [form] = Form.useForm();
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     fetchEntries();
@@ -67,6 +77,10 @@ const ManagerEntries: React.FC = () => {
     }
   };
 
+  const filteredEntries = entries.filter((e) =>
+    e.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const columns = [
     {
       title: "#",
@@ -95,47 +109,78 @@ const ManagerEntries: React.FC = () => {
 
   return (
     <Layout className="manager-entries">
-      <Sider width={200} className="manager-entries__sider">
-        <Menu mode="inline" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="1" icon={<UserOutlined />}>
-            Manage Users
-          </Menu.Item>
-          <Menu.Item key="2" icon={<FileTextOutlined />}>
-            Manage Entries
-          </Menu.Item>
-          <Menu.Item key="3" icon={<FileAddOutlined />}>
-            Manage Article
-          </Menu.Item>
-          <Menu.Item key="4" icon={<LogoutOutlined />}>
-            Log out
-          </Menu.Item>
-        </Menu>
+      <Sider width={220} className="manager-entries__sider">
+        <div className="sidebar-menu">
+          <Link to="/admin/user" className="menu-item">
+            <div className="icon-box">
+              <UserOutlined className="icon" />
+            </div>
+            <span>Manage Users</span>
+          </Link>
+
+          <Link to="/admin/entries" className="menu-item active">
+            <div className="icon-box">
+              <FileTextOutlined className="icon" />
+            </div>
+            <span>Manage Entries</span>
+          </Link>
+
+          <Link to="/admin/article" className="menu-item">
+            <div className="icon-box">
+              <FileAddOutlined className="icon" />
+            </div>
+            <span>Manage Article</span>
+          </Link>
+
+          <Link to="/login" className="menu-item logout">
+            <div className="icon-box">
+              <LogoutOutlined className="icon" />
+            </div>
+            <span>Log out</span>
+          </Link>
+        </div>
       </Sider>
 
       <Layout style={{ padding: "24px" }}>
         <Content>
-          <h2 className="entries-title">📂 Manage Categories</h2>
+          <div className="entries-header">
+            <div className="header-box title-box">
+              <h2>Manage Categories</h2>
+            </div>
 
-          <div className="entries-form">
-            <label>Category Name:</label>
-            <Input
-              placeholder="Enter category name"
-              value={entryName}
-              onChange={(e) => setEntryName(e.target.value)}
-            />
-            <Button type="primary" block onClick={handleAddEntry}>
-              Add Category
-            </Button>
+            <div className="header-box search-box">
+              <Input
+                placeholder="Search Article Categories"
+                prefix={<SearchOutlined />}
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="search-input"
+              />
+            </div>
           </div>
 
-          <div className="entries-list">
-            <h3>📑 Category List</h3>
-            <Table
-              columns={columns}
-              dataSource={entries}
-              rowKey="id"
-              pagination={false}
-            />
+          <div className="entries-container">
+            <div className="entries-form">
+              <label>Category Name:</label>
+              <Input
+                placeholder="Enter category name"
+                value={entryName}
+                onChange={(e) => setEntryName(e.target.value)}
+              />
+              <Button type="primary" block onClick={handleAddEntry}>
+                Add Category
+              </Button>
+            </div>
+
+            <div className="entries-list">
+              <h3>📑 Category List</h3>
+              <Table
+                columns={columns}
+                dataSource={filteredEntries}
+                rowKey="id"
+                pagination={false}
+              />
+            </div>
           </div>
 
           <Modal

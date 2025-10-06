@@ -67,10 +67,16 @@ const ManagerUser: React.FC = () => {
       key: "action",
       render: (_, record) => (
         <div style={{ display: "flex", gap: "8px" }}>
-          <Button type="link" danger onClick={() => handleBlock(record.id)}>
+          <Button
+            className="btn-action block"
+            onClick={() => handleBlock(record.id)}
+          >
             block
           </Button>
-          <Button type="link" onClick={() => handleUnblock(record.id)}>
+          <Button
+            className="btn-action unblock"
+            onClick={() => handleUnblock(record.id)}
+          >
             unblock
           </Button>
         </div>
@@ -101,76 +107,81 @@ const ManagerUser: React.FC = () => {
 
   return (
     <Layout className="manager-user">
-<Sider width={220} className="manager-user__sider">
-  <div className="sidebar-menu">
-    <Link to="/manageUsers" className="menu-item active">
-      <div className="icon-box">
-        <UserOutlined className="icon" />
-      </div>
-      <span>Manage Users</span>
-    </Link>
+      <Sider width={220} className="manager-user__sider">
+        <div className="sidebar-menu">
+          <Link to="/admin/user" className="menu-item active">
+            <div className="icon-box">
+              <UserOutlined className="icon" />
+            </div>
+            <span>Manage Users</span>
+          </Link>
 
-    <Link to="/manageEntries" className="menu-item">
-      <div className="icon-box">
-        <FileTextOutlined className="icon" />
-      </div>
-      <span>Manage Entries</span>
-    </Link>
+          <Link to="/admin/entries" className="menu-item">
+            <div className="icon-box">
+              <FileTextOutlined className="icon" />
+            </div>
+            <span>Manage Entries</span>
+          </Link>
 
-    <Link to="/manageArticle" className="menu-item">
-      <div className="icon-box">
-        <FileAddOutlined className="icon" />
-      </div>
-      <span>Manage Article</span>
-    </Link>
+          <Link to="/admin/article" className="menu-item">
+            <div className="icon-box">
+              <FileAddOutlined className="icon" />
+            </div>
+            <span>Manage Article</span>
+          </Link>
 
-    <Link to="/login" className="menu-item logout">
-      <div className="icon-box">
-        <LogoutOutlined className="icon" />
-      </div>
-      <span>Log out</span>
-    </Link>
-  </div>
-</Sider>
+          <Link to="/login" className="menu-item logout">
+            <div className="icon-box">
+              <LogoutOutlined className="icon" />
+            </div>
+            <span>Log out</span>
+          </Link>
+        </div>
+      </Sider>
 
       <Layout style={{ padding: "24px" }}>
         <Content>
           <div className="manager-user__header">
-            <h2>
-              Team members <span>({users.length} users)</span>
-            </h2>
-            <Input
-              placeholder="Search user"
-              prefix={<SearchOutlined />}
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              style={{ maxWidth: 300 }}
-            />
+            <div className="header-box title-box">
+              <h2>
+                Team members <span>{users.length} users</span>
+              </h2>
+            </div>
+
+            <div className="header-box search-box">
+              <Input
+                placeholder="Search user"
+                prefix={<SearchOutlined />}
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                className="search-input"
+              />
+            </div>
           </div>
 
-<Table
-  columns={columns}
-  dataSource={filteredData}
-  rowKey="id"
-  pagination={{
-    pageSize: 10,
-    position: ["bottomCenter"],
-    showSizeChanger: false,
-    showLessItems: true,
-    showQuickJumper: false,
-    showTotal: undefined,
-    showTitle: false,
-    itemRender: (page, type, originalElement) => {
-      if (type === "prev") {
-        return <Button>Previous</Button>;
-      }
-      if (type === "next") {
-        return <Button>Next</Button>;
-      }
-      return originalElement;
-    },
-  }}
-/>
+          <Table
+            columns={columns}
+            dataSource={filteredData}
+            rowKey="id"
+            pagination={{
+              pageSize: 10,
+              position: ["bottomCenter"],
+              showSizeChanger: false,
+              showLessItems: true,
+              showQuickJumper: false,
+              showTotal: undefined,
+              showTitle: false,
+              itemRender: (page, type, originalElement) => {
+                if (type === "prev") {
+                  return <Button>Previous</Button>;
+                }
+                if (type === "next") {
+                  return <Button>Next</Button>;
+                }
+                return originalElement;
+              },
+            }}
+          />
         </Content>
       </Layout>
     </Layout>

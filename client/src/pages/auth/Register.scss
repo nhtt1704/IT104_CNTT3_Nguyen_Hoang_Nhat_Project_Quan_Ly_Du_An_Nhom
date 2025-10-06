@@ -29,8 +29,8 @@
     &::after {
       content: "";
       position: absolute;
-      bottom: 10%;
-      right: 15%;
+      bottom: 2%;
+      right: 1%;
       width: 180px;
       height: 180px;
       border-radius: 50%;
@@ -85,7 +85,6 @@
         }
 
         .login-text {
-          text-align: center;
           margin-top: 10px;
 
           a {

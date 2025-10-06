@@ -1,11 +1,6 @@
 import React from "react";
 import { Avatar, Button } from "antd";
-import {
-  LikeOutlined,
-  MessageOutlined,
-  ShareAltOutlined,
-  ArrowLeftOutlined,
-} from "@ant-design/icons";
+import { LikeOutlined,MessageOutlined,ShareAltOutlined,ArrowLeftOutlined } from "@ant-design/icons";
 import "./ArticleDetails.scss";
 
 function ArticleDetails() {
@@ -27,13 +22,11 @@ function ArticleDetails() {
   ];
 
   return (
-    <div className="post-detail">
-      {/* Back */}
+    <div className="post-detail">\
       <div className="post-detail__back">
         <ArrowLeftOutlined /> 
       </div>
 
-      {/* Post Header */}
       <div className="post-detail__card">
         <div className="post-detail__header">
           <Avatar src="https://i.pravatar.cc/80" size={60} />
@@ -48,7 +41,6 @@ function ArticleDetails() {
           </div>
         </div>
 
-        {/* Actions */}
         <div className="post-detail__actions">
           <Button icon={<LikeOutlined />} type="text">
             Like
@@ -62,7 +54,6 @@ function ArticleDetails() {
         </div>
       </div>
 
-      {/* Comments */}
       <div className="post-detail__comments">
         <a href="#">View all 20 comments</a>
         {comments.map((c) => (

@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  TwitterOutlined,
-  FacebookOutlined,
-  InstagramOutlined,
-} from "@ant-design/icons";
+import { TwitterOutlined,FacebookOutlined,InstagramOutlined } from "@ant-design/icons";
 import { AiOutlinePinterest } from "react-icons/ai";
 import "./Footer.scss";
 

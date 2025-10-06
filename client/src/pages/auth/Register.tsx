@@ -1,8 +1,53 @@
-import React from "react";
-import { Form, Input, Button } from "antd";
-import "./Register.scss"
+import React, { useState } from "react";
+import { Form, Input, Button, message, Modal } from "antd";
+import axios from "axios";
+import "./Register.scss";
 
 function Register() {
+  const [loading, setLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const onFinish = async (values: any) => {
+    const { firstName, lastName, email, password, confirmPassword } = values;
+
+    if (password !== confirmPassword) {
+      message.error("Mật khẩu xác nhận không khớp!");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const checkUser = await axios.get(
+        `http://localhost:8000/users?email=${email}`
+      );
+      if (checkUser.data.length > 0) {
+        message.error("Email này đã được đăng ký!");
+        setLoading(false);
+        return;
+      }
+
+      await axios.post("http://localhost:8000/users", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+
+      setIsModalVisible(true);
+    } catch (error) {
+      console.error(error);
+      message.error("Đăng ký thất bại, vui lòng thử lại!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    window.location.href = "/login";
+  };
+
   return (
     <div className="register-page">
       <div className="register-container">
@@ -12,19 +57,20 @@ function Register() {
         </div>
 
         <div className="register-form-box">
-          <Form layout="vertical">
+          <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit">
             <div className="name-fields">
               <Form.Item
                 name="firstName"
-                label="First name"
-                rules={[{ required: true, message: "Please enter first name" }]}
+                label="Họ"
+                rules={[{ required: true, message: "Họ không được để trống" }]}
               >
                 <Input />
               </Form.Item>
+
               <Form.Item
                 name="lastName"
-                label="Last name"
-                rules={[{ required: true, message: "Please enter last name" }]}
+                label="Tên"
+                rules={[{ required: true, message: "Tên không được để trống" }]}
               >
                 <Input />
               </Form.Item>
@@ -32,41 +78,73 @@ function Register() {
 
             <Form.Item
               name="email"
-              label="Email address"
-              rules={[{ required: true, type: "email", message: "Invalid email" }]}
+              label="Email"
+              rules={[
+                { required: true, message: "Email không được để trống" },
+                { type: "email", message: "Email phải đúng định dạng" },
+              ]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item
               name="password"
-              label="Password"
-              rules={[{ required: true, message: "Please enter password" }]}
+              label="Mật khẩu"
+              rules={[
+                { required: true, message: "Mật khẩu không được để trống" },
+                { min: 6, message: "Mật khẩu tối thiểu 6 ký tự" },
+              ]}
             >
               <Input.Password />
             </Form.Item>
 
             <Form.Item
               name="confirmPassword"
-              label="Confirm Password"
-              rules={[{ required: true, message: "Please confirm password" }]}
+              label="Xác nhận mật khẩu"
+              dependencies={["password"]}
+              rules={[
+                { required: true, message: "Mật khẩu xác nhận không được để trống" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error("Mật khẩu phải trùng khớp"));
+                  },
+                }),
+              ]}
             >
               <Input.Password />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>
-                Sign up
+              <Button type="primary" htmlType="submit" block loading={loading}>
+                Đăng ký
               </Button>
             </Form.Item>
 
             <div className="login-text">
-              <span>Already have an account? </span>
-              <a href="/login">login</a>
+              <span>Đã có tài khoản? </span>
+              <a href="/login">Đăng nhập</a>
             </div>
           </Form>
         </div>
       </div>
+
+      <Modal
+        open={isModalVisible}
+        onOk={handleOk}
+        cancelButtonProps={{ style: { display: "none" } }}
+        okText="Đăng nhập ngay"
+        centered
+      >
+        <h2 style={{ textAlign: "center", color: "#52c41a" }}>
+          🎉 Đăng ký thành công!
+        </h2>
+        <p style={{ textAlign: "center" }}>
+          Bạn sẽ được chuyển đến trang đăng nhập ngay bây giờ.
+        </p>
+      </Modal>
     </div>
   );
 }

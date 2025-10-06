@@ -98,7 +98,6 @@
   }
 }
 
-/* Giữ phần pagination như cũ */
 .ant-pagination {
   display: flex;
   align-items: center;
@@ -120,4 +119,102 @@
   .ant-pagination-item {
     margin: 0 4px;
   }
+}
+.manager-user__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .header-box {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    height: 48px;
+  }
+
+  .title-box {
+    flex: 1;
+    max-width: 280px;
+
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+      margin: 0;
+
+      span {
+        font-size: 13px;
+        color: #6b7280;
+        margin-left: 6px;
+        background-color: #f3f4f6;
+        padding: 2px 8px;
+        border-radius: 6px;
+      }
+    }
+  }
+
+  .search-box {
+    flex: 2;
+    max-width: 450px;
+
+    .search-input {
+      height: 44px;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+
+      input {
+        font-size: 14px;
+      }
+
+      .ant-input-prefix {
+        color: #9ca3af;
+      }
+    }
+  }
+}
+
+.btn-action {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: auto;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &.block {
+    color: #ef4444;
+
+    &:hover {
+      background-color: #fee2e2;
+    }
+  }
+
+  &.unblock {
+    color: #3b82f6;
+
+    &:hover {
+      background-color: #dbeafe;
+    }
+  }
+}
+
+.ant-btn-link.btn-action {
+  padding: 2px 10px !important;
+  height: auto !important;
+  border: 1px solid transparent;
+  background: #fff !important;
 }

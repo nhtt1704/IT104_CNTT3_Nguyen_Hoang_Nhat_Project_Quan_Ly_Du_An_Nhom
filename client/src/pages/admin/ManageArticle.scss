@@ -1,0 +1,144 @@
+.manage-article {
+  min-height: 100vh;
+  background: #f6f7fb;
+  display: flex;
+
+  &__sider {
+    background: #ffffff;
+    border-right: 1px solid #eee;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.05);
+
+    .sidebar-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background-color: #f4f6ff;
+      color: #1a1a1a;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+
+      .icon-box {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background-color: #e0e7ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .icon {
+          color: #3b82f6;
+          font-size: 16px;
+        }
+      }
+
+      &:hover {
+        background-color: #e0e7ff;
+        transform: translateX(3px);
+      }
+
+      &.active {
+        background-color: #dbeafe;
+        font-weight: 600;
+
+        .icon-box {
+          background-color: #c7d2fe;
+        }
+      }
+
+      &.logout {
+        background-color: #f0f9ff;
+        color: #0f172a;
+
+        .icon-box {
+          background-color: #e0f2fe;
+
+          .icon {
+            color: #1e3a8a;
+          }
+        }
+
+        &:hover {
+          background-color: #dbeafe;
+        }
+      }
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    background-color: #f6f7fb;
+    padding: 0 24px 24px 24px;
+
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px 0;
+
+      .add-btn {
+        position: absolute;
+        left: 0;
+        background-color: #6b4eff;
+        color: #fff;
+        border-radius: 20px;
+        font-weight: 500;
+        border: none;
+        padding: 22px 24px;
+
+        &:hover {
+          background-color: #5a3ee0;
+        }
+      }
+
+      .title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #111;
+      }
+    }
+
+    .table-wrapper {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+      .ant-table {
+        background: #fff;
+      }
+
+      .btn-edit {
+        background-color: #52c41a;
+        border: none;
+      }
+
+      .btn-delete {
+        border: none;
+        color: #fff;
+        background-color: red;
+      }
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+  }
+}
