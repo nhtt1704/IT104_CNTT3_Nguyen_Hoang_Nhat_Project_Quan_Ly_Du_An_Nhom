@@ -7,7 +7,6 @@ export default function Home() {
   return (
     <div>
       <Header></Header>
-      <hr />
       <Body></Body>
       <hr />
       <Footer></Footer>

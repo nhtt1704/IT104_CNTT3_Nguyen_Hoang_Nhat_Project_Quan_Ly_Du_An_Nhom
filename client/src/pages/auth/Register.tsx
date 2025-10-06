@@ -17,41 +17,43 @@ function Register() {
               <Form.Item
                 name="firstName"
                 label="First name"
-                rules={[{ required: true, message: "Please enter first name" }]}
+                rules={[{ message: "Please enter first name" }]}
               >
                 <Input />
               </Form.Item>
               <Form.Item
                 name="lastName"
                 label="Last name"
-                rules={[{ required: true, message: "Please enter last name" }]}
+                rules={[{ message: "Please enter last name" }]}
               >
                 <Input />
               </Form.Item>
             </div>
 
+            <Input />
             <Form.Item
               name="email"
               label="Email address"
-              rules={[{ required: true, type: "email", message: "Invalid email" }]}
+              rules={[{ type: "email", message: "Invalid email" }]}
             >
-              <Input />
+
             </Form.Item>
 
+            <Input.Password />
             <Form.Item
               name="password"
               label="Password"
-              rules={[{ required: true, message: "Please enter password" }]}
+              rules={[{ message: "Please enter password" }]}
             >
-              <Input.Password />
+
             </Form.Item>
 
+            <Input.Password />
             <Form.Item
               name="confirmPassword"
               label="Confirm Password"
-              rules={[{ required: true, message: "Please confirm password" }]}
+              rules={[{ message: "Please confirm password" }]}
             >
-              <Input.Password />
             </Form.Item>
 
             <Form.Item>

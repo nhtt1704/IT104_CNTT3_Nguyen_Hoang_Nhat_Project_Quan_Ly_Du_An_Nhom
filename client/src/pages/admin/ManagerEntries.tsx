@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 import "./ManagerEntries.scss";
+import AdminHeader from "./AdminHeader";
 
 const { Sider, Content } = Layout;
 
@@ -159,6 +160,7 @@ const ManagerEntries: React.FC = () => {
         </Content>
       </Layout>
     </Layout>
+    
   );
 };
 

@@ -32,20 +32,19 @@ function Login() {
           <div className="or-text">Or</div>
 
           <Form layout="vertical" className="login-form">
+            <Input placeholder="Enter a valid email address" />
             <Form.Item
               name="email"
               label="Email address"
-              rules={[{ required: true, type: "email", message: "Enter a valid email" }]}
+              rules={[{ type: "email", message: "Enter a valid email" }]}
             >
-              <Input placeholder="Enter a valid email address" />
             </Form.Item>
-
+            <Input.Password placeholder="Enter password" />
             <Form.Item
               name="password"
               label="Password"
-              rules={[{ required: true, message: "Please enter your password" }]}
+              rules={[{ message: "Please enter your password" }]}
             >
-              <Input.Password placeholder="Enter password" />
             </Form.Item>
 
             <Form.Item>
