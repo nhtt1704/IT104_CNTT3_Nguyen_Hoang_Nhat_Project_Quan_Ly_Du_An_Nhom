@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, Button, Input, Layout, Menu, Table, Tag } from "antd";
-import {
-  UserOutlined,
-  FileTextOutlined,
-  FileAddOutlined,
-  LogoutOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { UserOutlined,FileTextOutlined,FileAddOutlined,LogoutOutlined,SearchOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import axios from "axios";
 import "./ManagerUser.scss";

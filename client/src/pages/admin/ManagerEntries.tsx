@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Layout, Menu, Table, Modal, Form } from "antd";
-import {
-  UserOutlined,
-  FileTextOutlined,
-  FileAddOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
+import { UserOutlined,FileTextOutlined,FileAddOutlined,LogoutOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "./ManagerEntries.scss";
-import AdminHeader from "./AdminHeader";
 
 const { Sider, Content } = Layout;
 
