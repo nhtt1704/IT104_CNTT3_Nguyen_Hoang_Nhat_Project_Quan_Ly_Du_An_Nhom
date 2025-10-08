@@ -10,6 +10,7 @@ import AllMyPosts from "../components/AllMyPosts";
 import AdminEntries from "../pages/admin/AdminEntries";
 import AdminUser from "../pages/admin/AdminUser";
 import AdminArticle from "../pages/admin/AdminArticle";
+import EditArticle from "../components/EditArticle";
 
 export const routers = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ export const routers = createBrowserRouter([
         path: "/admin/article",
         element: <AdminArticle></AdminArticle>,
     },
+    {
+        path: "/editArticle/:id",
+        element: <EditArticle></EditArticle>
+    }
     //   {
     //     path: "/admin",
     //     element: <ProtectedRoute children={<Admin></Admin>}></ProtectedRoute>,

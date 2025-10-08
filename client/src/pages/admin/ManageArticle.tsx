@@ -7,6 +7,8 @@ import {
   Tag,
   Select,
   Pagination,
+  Modal,
+  message,
 } from "antd";
 import {
   UserOutlined,
@@ -14,52 +16,62 @@ import {
   FileAddOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./ManageArticle.scss";
 
 const { Sider, Content } = Layout;
 const { Option } = Select;
 
 interface Article {
-  key: string;
+  id: number;
   image: string;
   title: string;
-  category: string;
   content: string;
+  mood: string;
   status: string;
 }
 
 export default function ManageArticle() {
   const [articles, setArticles] = useState<Article[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5; // ✅ Mỗi trang tối đa 5 bài
+
+  const navigate = useNavigate();
+
+  const fetchArticles = async () => {
+    const res = await axios.get("http://localhost:8000/articles");
+    setArticles(res.data);
+  };
 
   useEffect(() => {
-    setArticles([
-      {
-        key: "1",
-        image:
-          "https://cdn.tgdd.vn/Files/2021/09/02/1380848/cach-nau-ca-sot-ca-chua-thom-ngon-khong-bi-tanh-202201141555078832.jpg",
-        title: "Học nấu cá sốt cà chua",
-        category: "Nấu ăn",
-        content: "Tôi đã học được cách nấu ăn...",
-        status: "Public",
-      },
-      {
-        key: "2",
-        image:
-          "https://cdn.pixabay.com/photo/2016/11/29/06/18/laptop-1868736_1280.jpg",
-        title: "Bí kíp viết CV ngành IT",
-        category: "IT",
-        content: "Chia sẻ cách viết CV ấn tượng...",
-        status: "Private",
-      },
-    ]);
+    fetchArticles();
   }, []);
 
-  const handleStatusChange = (value: string, key: string) => {
-    const updated = articles.map((item) =>
-      item.key === key ? { ...item, status: value } : item
-    );
-    setArticles(updated);
+  const handleDelete = async () => {
+    if (selectedId) {
+      await axios.delete(`http://localhost:8000/articles/${selectedId}`);
+      setArticles((prev) => prev.filter((article) => article.id !== selectedId));
+      message.success("Xóa bài viết thành công");
+      setIsModalOpen(false);
+      setSelectedId(null);
+    }
+  };
+
+  const handleStatusChange = async (value: string, id: number) => {
+    await axios.patch(`http://localhost:8000/articles/${id}`, {
+      status: value,
+    });
+    fetchArticles();
+  };
+
+  // ✅ Cắt danh sách theo trang hiện tại
+  const getPaginatedArticles = () => {
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    return articles.slice(start, end);
   };
 
   const columns = [
@@ -78,13 +90,18 @@ export default function ManageArticle() {
       ),
     },
     { title: "Tiêu đề", dataIndex: "title" },
-    { title: "Chủ đề", dataIndex: "category" },
     { title: "Nội dung", dataIndex: "content" },
     {
       title: "Trạng thái",
       dataIndex: "status",
       render: (status: string) => (
-        <Tag color={status === "Public" ? "green" : "red"}>{status}</Tag>
+        <Tag
+          color={
+            status === "Công khai" || status === "Public" ? "green" : "red"
+          }
+        >
+          {status}
+        </Tag>
       ),
     },
     {
@@ -92,22 +109,35 @@ export default function ManageArticle() {
       render: (_: string, record: Article) => (
         <Select
           defaultValue={record.status}
-          style={{ width: 100 }}
-          onChange={(value) => handleStatusChange(value, record.key)}
+          style={{ width: 120 }}
+          onChange={(value) => handleStatusChange(value, record.id)}
         >
-          <Option value="Public">Public</Option>
-          <Option value="Private">Private</Option>
+          <Option value="Công khai">Công khai</Option>
+          <Option value="Riêng tư">Riêng tư</Option>
         </Select>
       ),
     },
     {
       title: "Hành động",
-      render: () => (
+      render: (_: string, record: Article) => (
         <div style={{ display: "flex", gap: 8, justifyContent: "center" }}>
-          <Button type="primary" size="small" className="btn-edit">
+          <Button
+            type="primary"
+            size="small"
+            className="btn-edit"
+            onClick={() => navigate(`/editArticle/${record.id}`)}
+          >
             Sửa
           </Button>
-          <Button danger size="small" className="btn-delete">
+          <Button
+            danger
+            size="small"
+            className="btn-delete"
+            onClick={() => {
+              setSelectedId(record.id);
+              setIsModalOpen(true);
+            }}
+          >
             Xóa
           </Button>
         </div>
@@ -125,21 +155,18 @@ export default function ManageArticle() {
             </div>
             <span>Manage Users</span>
           </Link>
-
           <Link to="/admin/entries" className="menu-item">
             <div className="icon-box">
               <FileTextOutlined className="icon" />
             </div>
             <span>Manage Entries</span>
           </Link>
-
           <Link to="/admin/article" className="menu-item active">
             <div className="icon-box">
               <FileAddOutlined className="icon" />
             </div>
             <span>Manage Article</span>
           </Link>
-
           <Link to="/login" className="menu-item logout">
             <div className="icon-box">
               <LogoutOutlined className="icon" />
@@ -148,36 +175,44 @@ export default function ManageArticle() {
           </Link>
         </div>
       </Sider>
-
       <Layout style={{ padding: "24px" }}>
         <Content className="main-content">
           <div className="header">
-            <Button className="add-btn">Thêm mới bài viết</Button>
+            <Button className="add-btn" onClick={() => navigate("/addArticle")}>
+              Thêm mới bài viết
+            </Button>
             <h1 className="title">Quản lý bài viết</h1>
           </div>
-
           <div className="table-wrapper">
-            <Table columns={columns} dataSource={articles} pagination={false} rowKey="key" />
+            <Table
+              columns={columns}
+              dataSource={getPaginatedArticles()} // ✅ chỉ lấy bài của trang hiện tại
+              pagination={false}
+              rowKey="id"
+            />
           </div>
-
           <div className="pagination">
             <Pagination
-              defaultCurrent={1}
-              total={10}
+              current={currentPage}
+              total={articles.length}
+              pageSize={pageSize}
+              onChange={(page) => setCurrentPage(page)} // ✅ đổi trang
               showSizeChanger={false}
-              itemRender={(page, type, originalElement) => {
-                if (type === "prev") {
-                  return <Button>Previous</Button>;
-                }
-                if (type === "next") {
-                  return <Button>Next</Button>;
-                }
-                return originalElement;
-              }}
             />
           </div>
         </Content>
       </Layout>
+
+      <Modal
+        title="Xác nhận xóa"
+        open={isModalOpen}
+        onOk={handleDelete}
+        onCancel={() => setIsModalOpen(false)}
+        okText="Xóa"
+        cancelText="Hủy"
+      >
+        <p>Bạn có chắc chắn muốn xóa bài viết này không?</p>
+      </Modal>
     </Layout>
   );
 }
