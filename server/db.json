@@ -6,30 +6,47 @@
       "username": "@olivia",
       "email": "olivia@untitledui.com",
       "status": "hoạt động",
-      "avatar": "https://i.pravatar.cc/40?img=1"
+      "avatar": ""
     },
     {
       "id": 2,
       "name": "Phoenix Baker",
       "username": "@phoenix",
       "email": "phoenix@untitledui.com",
-      "status": "hoạt động",
-      "avatar": "https://i.pravatar.cc/40?img=2"
+      "status": "bị khóa",
+      "avatar": ""
     },
     {
       "id": 3,
       "name": "Lana Steiner",
       "username": "@lana",
       "email": "lana@untitledui.com",
-      "status": "hoạt động",
-      "avatar": "https://i.pravatar.cc/40?img=3"
+      "status": "bị khóa",
+      "avatar": ""
     },
     {
-      "firstName": "ng",
-      "lastName": "nhat",
+      "name": "ng nhat",
+      "username": "@nhat",
       "email": "nghoangnhat30@gmail.com",
       "password": "nnnnnn",
+      "status": "hoạt động",
       "id": 4
+    },
+    {
+      "name": "ng nhat",
+      "username": "@nhat",
+      "email": "nghoangnhat40@gmail.com",
+      "password": "12345678",
+      "status": "hoạt động",
+      "id": 5
+    },
+    {
+      "name": "ng duy",
+      "username": "@duy",
+      "email": "duy@gmail.com",
+      "password": "12345678",
+      "status": "bị khóa",
+      "id": 6
     }
   ],
   "entries": [
@@ -40,10 +57,6 @@
     {
       "id": 1759389981233,
       "name": "Technology"
-    },
-    {
-      "id": 1759453262099,
-      "name": "Heath"
     }
   ],
   "posts": [

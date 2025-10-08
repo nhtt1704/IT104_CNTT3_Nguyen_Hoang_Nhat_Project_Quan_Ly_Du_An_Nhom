@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Input, Button, message, Modal } from "antd";
 import axios from "axios";
 import "./Register.scss";
@@ -27,11 +27,18 @@ function Register() {
         return;
       }
 
+      const name = `${firstName.trim()} ${lastName.trim()}`;
+
+      const username = `@${lastName.trim().toLowerCase().replace(/\s+/g, "")}`;
+
+      const status = "hoạt động";
+
       await axios.post("http://localhost:8000/users", {
-        firstName,
-        lastName,
+        name,
+        username,
         email,
         password,
+        status,
       });
 
       setIsModalVisible(true);
@@ -62,7 +69,7 @@ function Register() {
               <Form.Item
                 name="firstName"
                 label="Họ"
-                rules={[{ required: true, message: "Họ không được để trống" }]}
+                rules={[{  message: "Họ không được để trống" }]}
               >
                 <Input />
               </Form.Item>
@@ -70,7 +77,7 @@ function Register() {
               <Form.Item
                 name="lastName"
                 label="Tên"
-                rules={[{ required: true, message: "Tên không được để trống" }]}
+                rules={[{  message: "Tên không được để trống" }]}
               >
                 <Input />
               </Form.Item>
@@ -80,7 +87,7 @@ function Register() {
               name="email"
               label="Email"
               rules={[
-                { required: true, message: "Email không được để trống" },
+                {  message: "Email không được để trống" },
                 { type: "email", message: "Email phải đúng định dạng" },
               ]}
             >
@@ -91,7 +98,7 @@ function Register() {
               name="password"
               label="Mật khẩu"
               rules={[
-                { required: true, message: "Mật khẩu không được để trống" },
+                {  message: "Mật khẩu không được để trống" },
                 { min: 6, message: "Mật khẩu tối thiểu 6 ký tự" },
               ]}
             >
@@ -103,7 +110,10 @@ function Register() {
               label="Xác nhận mật khẩu"
               dependencies={["password"]}
               rules={[
-                { required: true, message: "Mật khẩu xác nhận không được để trống" },
+                {
+                  
+                  message: "Mật khẩu xác nhận không được để trống",
+                },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
@@ -139,10 +149,10 @@ function Register() {
         centered
       >
         <h2 style={{ textAlign: "center", color: "#52c41a" }}>
-          🎉 Đăng ký thành công!
+           Đăng ký thành công
         </h2>
         <p style={{ textAlign: "center" }}>
-          Bạn sẽ được chuyển đến trang đăng nhập ngay bây giờ.
+          Bạn sẽ được chuyển đến trang đăng nhập ngay bây giờ
         </p>
       </Modal>
     </div>

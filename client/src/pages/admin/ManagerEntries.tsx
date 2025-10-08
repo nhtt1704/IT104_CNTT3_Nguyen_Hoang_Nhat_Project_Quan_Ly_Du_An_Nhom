@@ -1,19 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Input,
-  Layout,
-  Table,
-  Modal,
-  Form,
-} from "antd";
-import {
-  UserOutlined,
-  FileTextOutlined,
-  FileAddOutlined,
-  LogoutOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { Button, Input, Layout, Table, Modal, Form } from "antd";
+import { UserOutlined, FileTextOutlined, FileAddOutlined, LogoutOutlined, SearchOutlined,} from "@ant-design/icons";
 import axios from "axios";
 import "./ManagerEntries.scss";
 import { Link } from "react-router-dom";
@@ -111,7 +98,7 @@ const ManagerEntries: React.FC = () => {
     <Layout className="manager-entries">
       <Sider width={220} className="manager-entries__sider">
         <div className="sidebar-menu">
-          <Link to="/admin/user" className="menu-item">
+          <Link to="/admin/users" className="menu-item">
             <div className="icon-box">
               <UserOutlined className="icon" />
             </div>

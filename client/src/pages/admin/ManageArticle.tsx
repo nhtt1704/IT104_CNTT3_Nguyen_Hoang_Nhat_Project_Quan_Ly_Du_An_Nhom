@@ -119,7 +119,7 @@ export default function ManageArticle() {
     <Layout className="manage-article">
       <Sider width={220} className="manage-article__sider">
         <div className="sidebar-menu">
-          <Link to="/admin/user" className="menu-item">
+          <Link to="/admin/users" className="menu-item">
             <div className="icon-box">
               <UserOutlined className="icon" />
             </div>

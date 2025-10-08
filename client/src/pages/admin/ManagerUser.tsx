@@ -42,15 +42,18 @@ const ManagerUser: React.FC = () => {
           {record.avatar ? (
             <Avatar src={record.avatar} />
           ) : (
-            <Avatar>{record.name.charAt(0)}</Avatar>
+            <Avatar>{record.name?.charAt(0) || "?"}</Avatar>
           )}
           <div>
-            <div>{record.name}</div>
-            <span style={{ color: "#888" }}>{record.username}</span>
+            <div>{record.name || "No name"}</div>
+            <span style={{ color: "#888" }}>
+              {record.username || "Unknown"}
+            </span>
           </div>
         </div>
       ),
     },
+
     {
       title: "Status",
       dataIndex: "status",
@@ -98,12 +101,14 @@ const ManagerUser: React.FC = () => {
     );
   };
 
-  const filteredData = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      user.username.toLowerCase().includes(searchText.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredData = users.filter((user) => {
+    const search = searchText?.toLowerCase() || "";
+    return (
+      user.name?.toLowerCase().includes(search) ||
+      user.username?.toLowerCase().includes(search) ||
+      user.email?.toLowerCase().includes(search)
+    );
+  });
 
   return (
     <Layout className="manager-user">

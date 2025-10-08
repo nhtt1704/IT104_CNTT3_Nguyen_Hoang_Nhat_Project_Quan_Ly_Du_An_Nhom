@@ -1,4 +1,3 @@
-import React from "react";
 import { BellOutlined, MessageOutlined } from "@ant-design/icons";
 import { Avatar, Badge } from "antd";
 import "./AdminHeader.scss";
@@ -16,7 +15,7 @@ const AdminHeader = () => {
         </Badge>
 
         <Avatar
-          src="https://i.pravatar.cc/40"
+          src=""
           size={40}
           className="admin-avatar"
         />
