@@ -68,7 +68,7 @@ function Register() {
             <div className="name-fields">
               <Form.Item
                 name="firstName"
-                label="Họ"
+                label="FirstName"
                 rules={[{  message: "Họ không được để trống" }]}
               >
                 <Input />
@@ -76,7 +76,7 @@ function Register() {
 
               <Form.Item
                 name="lastName"
-                label="Tên"
+                label="LastName"
                 rules={[{  message: "Tên không được để trống" }]}
               >
                 <Input />
@@ -96,7 +96,7 @@ function Register() {
 
             <Form.Item
               name="password"
-              label="Mật khẩu"
+              label="Password"
               rules={[
                 {  message: "Mật khẩu không được để trống" },
                 { min: 6, message: "Mật khẩu tối thiểu 6 ký tự" },
@@ -107,7 +107,7 @@ function Register() {
 
             <Form.Item
               name="confirmPassword"
-              label="Xác nhận mật khẩu"
+              label="ConfirmPassword"
               dependencies={["password"]}
               rules={[
                 {
@@ -129,13 +129,13 @@ function Register() {
 
             <Form.Item>
               <Button type="primary" htmlType="submit" block loading={loading}>
-                Đăng ký
+                Sign up
               </Button>
             </Form.Item>
 
             <div className="login-text">
-              <span>Đã có tài khoản? </span>
-              <a href="/login">Đăng nhập</a>
+              <span>Already have account? </span>
+              <a href="/login">Login</a>
             </div>
           </Form>
         </div>

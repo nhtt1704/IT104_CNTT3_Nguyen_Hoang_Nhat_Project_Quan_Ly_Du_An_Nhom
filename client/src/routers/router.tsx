@@ -11,6 +11,8 @@ import AdminEntries from "../pages/admin/AdminEntries";
 import AdminUser from "../pages/admin/AdminUser";
 import AdminArticle from "../pages/admin/AdminArticle";
 import EditArticle from "../components/EditArticle";
+import AddArticleHome from "../components/AddArticleHome";
+import EditArticleHome from "../components/EditArticleHome";
 
 export const routers = createBrowserRouter([
   {
@@ -26,7 +28,7 @@ export const routers = createBrowserRouter([
       element: <AddArticle></AddArticle>,
     },
     {
-        path: "/articleDetails",
+        path: "/articleDetails/:id",
         element: <ArticleDetails></ArticleDetails>,
     },
     {
@@ -39,36 +41,27 @@ export const routers = createBrowserRouter([
     },
     {
         path: "/admin/users",
-        element: <AdminUser></AdminUser>,
+        element:<ProtectedRoute> <AdminUser></AdminUser> </ProtectedRoute> ,
     },
     {
         path: "/admin/entries",
-        element: <AdminEntries></AdminEntries>,
+        element: <ProtectedRoute> <AdminEntries></AdminEntries> </ProtectedRoute>,
     },
     {
         path: "/admin/article",
-        element: <AdminArticle></AdminArticle>,
+        element: <ProtectedRoute> <AdminArticle></AdminArticle> </ProtectedRoute>,
     },
     {
         path: "/editArticle/:id",
         element: <EditArticle></EditArticle>
-    }
-    //   {
-    //     path: "/admin",
-    //     element: <ProtectedRoute children={<Admin></Admin>}></ProtectedRoute>,
-    //     children: [
-    //       {
-    //         path: "/admin/users",
-    //         element: <AdminUser></AdminUser>,
-    //       },
-    //       {
-    //         path: "/admin/entries",
-    //         element: <AdminEntries></AdminEntries>,
-    //       },
-    //       {
-    //         path: "/admin/article",
-    //         element: <AdminArticle></AdminArticle>,
-    //       },
-    //     ],
-    //   },
+    },
+    {
+        path: "/addArticleHome",
+        element: <AddArticleHome></AddArticleHome>
+    },
+        {
+        path: "/editArticleHome/:id",
+        element: <EditArticleHome></EditArticleHome>
+    },
+
 ]);

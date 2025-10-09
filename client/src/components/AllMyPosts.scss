@@ -35,9 +35,15 @@
       font-weight: 500;
     }
 
-    .edit-link {
-      display: inline-block;
+    /* ✅ Dòng chứa category và nút edit */
+    .info-line {
+      display: flex;
+      justify-content: space-between; /* đẩy ra 2 bên */
+      align-items: center;
       margin-top: 8px;
+    }
+
+    .edit-link {
       color: #e11d48;
       font-weight: 500;
       transition: 0.2s;

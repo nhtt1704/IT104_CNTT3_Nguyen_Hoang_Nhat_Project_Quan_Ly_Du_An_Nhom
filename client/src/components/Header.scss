@@ -15,7 +15,7 @@
     color: #222;
 
     &-icon {
-      color: #e74c3c; 
+      color: #e74c3c;
       font-size: 14px;
     }
   }
@@ -38,6 +38,10 @@
     .ant-btn {
       border-radius: 6px;
       font-size: 14px;
+    }
+
+    .ant-avatar {
+      cursor: pointer;
     }
   }
 }

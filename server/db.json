@@ -117,7 +117,7 @@
       "userId": 1,
       "content": "Hôm nay mình vừa nộp xong bài tập lớn. Mệt nhưng thấy rất nhẹ nhõm!",
       "mood": "Căng thẳng",
-      "status": "Riêng tư",
+      "status": "Công khai",
       "image": "image1.jpg",
       "date": "2025-02-23"
     },
@@ -131,6 +131,25 @@
       "status": "Công khai",
       "image": "image2.jpg",
       "date": "2025-03-15"
+    },
+    {
+      "title": "a",
+      "content": "a",
+      "mood": "Căng thẳng",
+      "status": "Công khai",
+      "image": "",
+      "date": "2025-10-09",
+      "id": 3
+    },
+    {
+      "title": "hoc",
+      "category": "Education",
+      "mood": "Căng thẳng",
+      "content": "met moi",
+      "status": "Công khai",
+      "image": "",
+      "date": "2025-10-09",
+      "id": 4
     }
   ]
 }

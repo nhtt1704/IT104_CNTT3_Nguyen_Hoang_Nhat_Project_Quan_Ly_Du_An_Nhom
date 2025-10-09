@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, Input, Layout, Menu, Table, Tag } from "antd";
+import { Avatar, Button, Input, Layout, Menu, message, Table, Tag } from "antd";
 import {
   UserOutlined,
   FileTextOutlined,
@@ -10,7 +10,7 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import axios from "axios";
 import "./ManagerUser.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 
@@ -26,6 +26,15 @@ interface User {
 const ManagerUser: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [searchText, setSearchText] = useState("");
+
+  const navigate = useNavigate();
+
+    const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    message.success("Đăng xuất thành công!");
+    navigate("/login");
+  };
 
   useEffect(() => {
     axios.get("http://localhost:8000/users").then((res) => {
@@ -135,12 +144,12 @@ const ManagerUser: React.FC = () => {
             <span>Manage Article</span>
           </Link>
 
-          <Link to="/login" className="menu-item logout">
+          <div className="menu-item logout" onClick={handleLogout}>
             <div className="icon-box">
               <LogoutOutlined className="icon" />
             </div>
             <span>Log out</span>
-          </Link>
+          </div>
         </div>
       </Sider>
 

@@ -1,44 +1,91 @@
-import React from "react";
-import { Avatar, Button } from "antd";
-import { LikeOutlined,MessageOutlined,ShareAltOutlined,ArrowLeftOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Avatar, Button, Spin } from "antd";
+import {
+  LikeOutlined,
+  MessageOutlined,
+  ShareAltOutlined,
+  ArrowLeftOutlined,
+} from "@ant-design/icons";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import "./ArticleDetails.scss";
 
+interface Article {
+  id: number;
+  title: string;
+  date: string;
+  category: string;
+  content: string;
+  image: string;
+  status: string;
+}
+
 function ArticleDetails() {
+  const { id } = useParams<{ id: string }>(); 
+  const navigate = useNavigate();
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
+
   const comments = [
-    {
-      id: 1,
-      user: "John Doe",
-      text: "very good!",
-      likes: 13,
-      replies: 6,
-    },
-    {
-      id: 2,
-      user: "Anna Smith",
-      text: "hello rikkei!",
-      likes: 5,
-      replies: 6,
-    },
+    { id: 1, user: "John Doe", text: "very good!", likes: 13, replies: 6 },
+    { id: 2, user: "Anna Smith", text: "hello rikkei!", likes: 5, replies: 6 },
   ];
 
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8000/articles/${id}`);
+        setArticle(res.data);
+      } catch (err) {
+        console.error("Không tìm thấy bài viết:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchArticle();
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="loading">
+        <Spin size="large" />
+      </div>
+    );
+  }
+
+  if (!article) {
+    return (
+      <div className="post-detail">
+        <Button onClick={() => navigate(-1)} icon={<ArrowLeftOutlined />}>
+          Quay lại
+        </Button>
+        <p>Bài viết không tồn tại!</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="post-detail">\
-      <div className="post-detail__back">
-        <ArrowLeftOutlined /> 
+    <div className="post-detail">
+      <div className="post-detail__back" onClick={() => navigate(-1)}>
+        <ArrowLeftOutlined /> <span>Quay lại</span>
       </div>
 
       <div className="post-detail__card">
         <div className="post-detail__header">
           <Avatar src="https://i.pravatar.cc/80" size={60} />
           <div className="post-detail__info">
-            <h3>A Productive Day at Work</h3>
-            <p>
-              Today was a really productive day at work. I managed to finish a
-              report ahead of schedule and received positive feedback from my
-              manager. After work, I went for a walk in the park, enjoying the
-              fresh air. Looking forward to another great day tomorrow!
-            </p>
+            <h3>{article.title}</h3>
+            <p>{article.content}</p>
+            <span className="date">{article.date}</span>
+            <span className="category">{article.category}</span>
           </div>
+        </div>
+
+        <div className="post-detail__image">
+          <img src={article.image} alt={article.title} />
         </div>
 
         <div className="post-detail__actions">
@@ -66,7 +113,7 @@ function ArticleDetails() {
               <span className="comment__user">{c.user}</span>
               <p>{c.text}</p>
               <div className="comment__actions">
-                <span>{c.likes} Like</span>
+                <span>{c.likes} Likes</span>
                 <span>{c.replies} Replies</span>
               </div>
             </div>

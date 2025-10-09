@@ -54,7 +54,7 @@ function AddArticle() {
 
     await axios.post("http://localhost:8000/articles", newArticle);
     message.success("Thêm bài viết thành công!");
-    navigate("/admin/article");
+    navigate("/allMyPosts");
   };
 
   return (
@@ -63,7 +63,7 @@ function AddArticle() {
         <Title level={4}>📝 Add New Article</Title>
         <CloseOutlined
           className="add-article__close"
-          onClick={() => navigate("/admin/article")}
+          onClick={() => navigate("/allMyPosts")}
         />
       </div>
 

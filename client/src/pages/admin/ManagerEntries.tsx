@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input, Layout, Table, Modal, Form } from "antd";
+import { Button, Input, Layout, Table, Modal, Form, message } from "antd";
 import { UserOutlined, FileTextOutlined, FileAddOutlined, LogoutOutlined, SearchOutlined,} from "@ant-design/icons";
 import axios from "axios";
 import "./ManagerEntries.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Sider, Content } = Layout;
 
@@ -19,6 +19,15 @@ const ManagerEntries: React.FC = () => {
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
   const [form] = Form.useForm();
   const [searchText, setSearchText] = useState("");
+
+  const navigate = useNavigate();
+
+    const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    message.success("Đăng xuất thành công!");
+    navigate("/login");
+  };
 
   useEffect(() => {
     fetchEntries();
@@ -119,12 +128,12 @@ const ManagerEntries: React.FC = () => {
             <span>Manage Article</span>
           </Link>
 
-          <Link to="/login" className="menu-item logout">
+          <div className="menu-item logout" onClick={handleLogout}>
             <div className="icon-box">
               <LogoutOutlined className="icon" />
             </div>
             <span>Log out</span>
-          </Link>
+          </div>
         </div>
       </Sider>
 

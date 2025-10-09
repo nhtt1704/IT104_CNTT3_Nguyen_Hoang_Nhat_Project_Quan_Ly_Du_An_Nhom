@@ -7,41 +7,69 @@ import "./Body.scss";
 const { Title, Paragraph, Text } = Typography;
 const { Content } = Layout;
 
-interface Post {
+interface Article {
   id: number;
   title: string;
   date: string;
   category: string;
-  description: string;
+  content: string;
   image: string;
+  status: string;
+}
+
+interface Category {
+  id: number;
+  name: string;
 }
 
 export const Body = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/posts")
-      .then((res) => setPosts(res.data))
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+    const fetchData = async () => {
+      try {
+        const [articleRes, categoryRes] = await Promise.all([
+          axios.get("http://localhost:8000/articles"),
+          axios.get("http://localhost:8000/entries"),
+        ]);
+
+        const publicArticles = articleRes.data.filter(
+          (a: Article) => a.status === "Công khai" || a.status === "Public"
+        );
+
+        const sortedArticles = publicArticles.sort(
+          (a: Article, b: Article) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+
+        setArticles(sortedArticles);
+        setCategories(categoryRes.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, []);
 
-  const recentPosts = posts.slice(0, 3);
-  const categories = [
-    "All",
-    "Daily Journal",
-    "Work & Career",
-    "Personal Thoughts",
-    "Emotions & Feelings",
-  ];
-
-  const filteredPosts =
+  const filteredArticles =
     selectedCategory === "All"
-      ? posts
-      : posts.filter((p) => p.category === selectedCategory);
+      ? articles
+      : articles.filter((p) => p.category === selectedCategory);
+
+  const paginatedArticles = filteredArticles.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
+  const recentPosts = articles.slice(0, 3);
 
   if (loading) {
     return (
@@ -69,7 +97,7 @@ export const Body = () => {
                 >
                   <Text className="date">Date: {recentPosts[0].date}</Text>
                   <Title level={5}>{recentPosts[0].title}</Title>
-                  <Paragraph>{recentPosts[0].description}</Paragraph>
+                  <Paragraph>{recentPosts[0].content.slice(0, 100)}...</Paragraph>
                   <Text className="category">{recentPosts[0].category}</Text>
                 </Card>
               </Link>
@@ -87,7 +115,7 @@ export const Body = () => {
                   >
                     <Text className="date">Date: {post.date}</Text>
                     <Title level={5}>{post.title}</Title>
-                    <Paragraph>{post.description}</Paragraph>
+                    <Paragraph>{post.content.slice(0, 80)}...</Paragraph>
                     <Text className="category">{post.category}</Text>
                   </Card>
                 </Link>
@@ -108,21 +136,33 @@ export const Body = () => {
         </div>
 
         <div className="category-filters">
+          <span
+            className={`filter-item ${selectedCategory === "All" ? "active" : ""}`}
+            onClick={() => {
+              setSelectedCategory("All");
+              setCurrentPage(1);
+            }}
+          >
+            All
+          </span>
           {categories.map((cat) => (
             <span
-              key={cat}
+              key={cat.id}
               className={`filter-item ${
-                selectedCategory === cat ? "active" : ""
+                selectedCategory === cat.name ? "active" : ""
               }`}
-              onClick={() => setSelectedCategory(cat)}
+              onClick={() => {
+                setSelectedCategory(cat.name);
+                setCurrentPage(1);
+              }}
             >
-              {cat}
+              {cat.name}
             </span>
           ))}
         </div>
 
         <Row gutter={[24, 24]}>
-          {filteredPosts.map((post) => (
+          {paginatedArticles.map((post) => (
             <Col xs={24} sm={12} md={8} key={post.id}>
               <Link to={`/articleDetails/${post.id}`}>
                 <Card
@@ -130,10 +170,10 @@ export const Body = () => {
                   cover={<img src={post.image} alt={post.title} />}
                   className="post-card"
                 >
-                  <Text className="date">Date: {post.date}</Text>
-                  <Title level={5}>{post.title}</Title>
-                  <Paragraph>{post.description}</Paragraph>
-                  <Text className="category">{post.category}</Text>
+                    <Text className="date">Date: {post.date}</Text>
+                    <Title level={5}>{post.title}</Title>
+                    <Paragraph>{post.content.slice(0, 100)}...</Paragraph>
+                    <Text className="category">{post.category}</Text>
                 </Card>
               </Link>
             </Col>
@@ -141,7 +181,13 @@ export const Body = () => {
         </Row>
 
         <div className="pagination">
-          <Pagination defaultCurrent={1} total={filteredPosts.length} />
+          <Pagination
+            current={currentPage}
+            total={filteredArticles.length}
+            pageSize={pageSize}
+            onChange={(page) => setCurrentPage(page)}
+            showSizeChanger={false}
+          />
         </div>
       </Content>
     </Layout>

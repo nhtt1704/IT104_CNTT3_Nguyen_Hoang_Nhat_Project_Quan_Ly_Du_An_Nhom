@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Row, Col, Typography, Card, Button, Pagination, Spin } from "antd";
+import { Layout, Row, Col, Typography, Card, Spin, Pagination } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AllMyPosts.scss";
@@ -9,27 +9,36 @@ import Footer from "./Footer";
 const { Title, Paragraph, Text } = Typography;
 const { Content } = Layout;
 
-interface Post {
+interface Article {
   id: number;
   title: string;
   date: string;
   category: string;
-  description: string;
+  content: string;
   image: string;
+  status: string;
 }
 
 export const AllMyPosts = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/posts")
-      .then((res) => setPosts(res.data))
+      .get("http://localhost:8000/articles")
+      .then((res) => setArticles(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
+
+  const paginatedArticles = articles.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   if (loading) {
     return (
@@ -40,47 +49,58 @@ export const AllMyPosts = () => {
   }
 
   return (
-  
     <Layout className="mypost-layout">
-      <Header></Header>
+      <Header />
+
       <Content className="mypost-content">
         <div className="header">
           <Title
             level={3}
             className="add-article"
-            onClick={() => navigate("/addArticle")}
+            onClick={() => navigate("/addArticleHome")}
           >
-            ADD NEW ARTICLE
+             ADD NEW ARTICLE
           </Title>
         </div>
 
         <Row gutter={[24, 24]}>
-          {posts.map((post) => (
-            <Col xs={24} sm={12} md={8} key={post.id}>
+          {paginatedArticles.map((article) => (
+            <Col xs={24} sm={12} md={8} key={article.id}>
               <Card
                 hoverable
-                cover={<img src={post.image} alt={post.title} />}
+                cover={<img src={article.image} alt={article.title} />}
                 className="post-card"
               >
-                <Text className="date">Date: {post.date}</Text>
-                <Title level={5}>{post.title}</Title>
-                <Paragraph>{post.description}</Paragraph>
-                <Text className="category">{post.category}</Text>
-                <br />
-                <Link to={`/edit/${post.id}`} className="edit-link">
-                  Edit your post!
-                </Link>
+                <Text className="date">Date: {article.date}</Text>
+                <Title level={5}>{article.title}</Title>
+                <Paragraph>
+                  {article.content.length > 100
+                    ? article.content.slice(0, 100) + "..."
+                    : article.content}
+                </Paragraph>
+                <div className="info-line">
+                  <Text className="category">{article.category}</Text>
+                  <Link to={`/editArticleHome/${article.id}`} className="edit-link">
+                    Edit your post
+                  </Link>
+                </div>
               </Card>
             </Col>
           ))}
         </Row>
 
         <div className="pagination">
-          <Pagination defaultCurrent={1} total={50} />
+          <Pagination
+            current={currentPage}
+            total={articles.length}
+            pageSize={pageSize}
+            onChange={(page) => setCurrentPage(page)}
+            showSizeChanger={false}
+          />
         </div>
       </Content>
-      <br />
-      <Footer></Footer>
+
+      <Footer />
     </Layout>
   );
 };

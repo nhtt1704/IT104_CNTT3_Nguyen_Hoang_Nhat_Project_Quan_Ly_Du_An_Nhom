@@ -1,40 +1,46 @@
-import React, { useEffect, useState, type JSX } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
-interface ProtectedRouteProps {
-  children: JSX.Element;
+interface ProtectedRouterProps {
+  children: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
+const ProtectedRouter: React.FC<ProtectedRouterProps> = ({ children }) => {
+  const [authorized, setAuthorized] = useState<boolean | null>(null);
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const userId = localStorage.getItem("userId");
-        if (!userId) {
-          setIsAuthorized(false);
-          return;
-        }
+    const checkAuth = async () => {
+      if (!userId) {
+        setAuthorized(false);
+        return;
+      }
 
+      try {
         const res = await axios.get(`http://localhost:8000/users/${userId}`);
         if (res.data) {
-          setIsAuthorized(true);
+          setAuthorized(true);
         } else {
-          setIsAuthorized(false);
+          setAuthorized(false);
         }
-      } catch {
-        setIsAuthorized(false);
+      } catch (err) {
+        setAuthorized(false);
       }
     };
-    checkUser();
-  }, []);
 
-  if (isAuthorized === null) return <p>Đang kiểm tra quyền truy cập...</p>;
-  if (!isAuthorized) return <Navigate to="/login" replace />;
+    checkAuth();
+  }, [userId]);
 
-  return children;
+  if (authorized === null) {
+    return <div>Đang kiểm tra đăng nhập...</div>;
+  }
+
+  if (!authorized) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 };
 
-export default ProtectedRoute;
+export default ProtectedRouter;

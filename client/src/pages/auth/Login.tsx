@@ -40,7 +40,10 @@ const Login: React.FC = () => {
         setError("Mật khẩu không đúng");
       } else {
         message.success("Đăng nhập thành công!");
+        // lưu user id vào localStorage để bảo vệ router
+        localStorage.setItem("userId", user.id);
         localStorage.setItem("user", JSON.stringify(user));
+
         window.location.href = "/home";
       }
     } catch (err) {
@@ -70,7 +73,12 @@ const Login: React.FC = () => {
 
           <div className="or-text">Or</div>
 
-          <Form form={form} layout="vertical" onFinish={handleLogin} className="login-form">
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleLogin}
+            className="login-form"
+          >
             <Form.Item name="email" label="Email address">
               <Input placeholder="Enter a valid email address" />
             </Form.Item>
@@ -79,7 +87,9 @@ const Login: React.FC = () => {
               <Input.Password placeholder="Enter password" />
             </Form.Item>
 
-            {error && <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>}
+            {error && (
+              <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
+            )}
 
             <Form.Item>
               <Button type="primary" htmlType="submit" block loading={loading}>
@@ -98,10 +108,18 @@ const Login: React.FC = () => {
       <footer className="login-footer">
         <p>Copyright © 2025. All rights reserved.</p>
         <div className="footer-icons">
-          <a href="#"><FacebookFilled /></a>
-          <a href="#"><TwitterOutlined /></a>
-          <a href="#"><i className="fab fa-google">G</i></a>
-          <a href="#"><LinkedinOutlined /></a>
+          <a href="#">
+            <FacebookFilled />
+          </a>
+          <a href="#">
+            <TwitterOutlined />
+          </a>
+          <a href="#">
+            <i className="fab fa-google">G</i>
+          </a>
+          <a href="#">
+            <LinkedinOutlined />
+          </a>
         </div>
       </footer>
     </div>

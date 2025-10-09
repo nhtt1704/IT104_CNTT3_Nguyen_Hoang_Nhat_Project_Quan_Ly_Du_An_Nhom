@@ -37,9 +37,17 @@ export default function ManageArticle() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5; // ✅ Mỗi trang tối đa 5 bài
+  const pageSize = 5;
 
   const navigate = useNavigate();
+
+  // 🧹 Hàm logout
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    message.success("Đăng xuất thành công!");
+    navigate("/login");
+  };
 
   const fetchArticles = async () => {
     const res = await axios.get("http://localhost:8000/articles");
@@ -67,7 +75,6 @@ export default function ManageArticle() {
     fetchArticles();
   };
 
-  // ✅ Cắt danh sách theo trang hiện tại
   const getPaginatedArticles = () => {
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
@@ -95,13 +102,7 @@ export default function ManageArticle() {
       title: "Trạng thái",
       dataIndex: "status",
       render: (status: string) => (
-        <Tag
-          color={
-            status === "Công khai" || status === "Public" ? "green" : "red"
-          }
-        >
-          {status}
-        </Tag>
+        <Tag color={status === "Công khai" ? "green" : "red"}>{status}</Tag>
       ),
     },
     {
@@ -167,14 +168,16 @@ export default function ManageArticle() {
             </div>
             <span>Manage Article</span>
           </Link>
-          <Link to="/login" className="menu-item logout">
+          {/* 🔸 Nút Logout đổi từ Link sang Button */}
+          <div className="menu-item logout" onClick={handleLogout}>
             <div className="icon-box">
               <LogoutOutlined className="icon" />
             </div>
             <span>Log out</span>
-          </Link>
+          </div>
         </div>
       </Sider>
+
       <Layout style={{ padding: "24px" }}>
         <Content className="main-content">
           <div className="header">
@@ -186,7 +189,7 @@ export default function ManageArticle() {
           <div className="table-wrapper">
             <Table
               columns={columns}
-              dataSource={getPaginatedArticles()} // ✅ chỉ lấy bài của trang hiện tại
+              dataSource={getPaginatedArticles()}
               pagination={false}
               rowKey="id"
             />
@@ -196,7 +199,7 @@ export default function ManageArticle() {
               current={currentPage}
               total={articles.length}
               pageSize={pageSize}
-              onChange={(page) => setCurrentPage(page)} // ✅ đổi trang
+              onChange={(page) => setCurrentPage(page)}
               showSizeChanger={false}
             />
           </div>

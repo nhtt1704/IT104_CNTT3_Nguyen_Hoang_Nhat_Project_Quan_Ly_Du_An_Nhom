@@ -38,14 +38,14 @@ export default function EditArticle() {
 
     await axios.patch(`http://localhost:8000/articles/${id}`, updatedArticle);
     message.success("Cập nhật bài viết thành công!");
-    navigate("/admin/article");
+    navigate("/allMyPosts");
   };
 
   return (
     <div className="add-article">
       <div className="add-article__header">
         <Title level={4}>✏️ Edit Article</Title>
-        <CloseOutlined className="add-article__close" onClick={() => navigate("/admin/article")} />
+        <CloseOutlined className="add-article__close" onClick={() => navigate("/allMyPosts")} />
       </div>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Form.Item
