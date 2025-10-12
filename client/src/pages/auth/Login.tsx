@@ -40,7 +40,6 @@ const Login: React.FC = () => {
         setError("Mật khẩu không đúng");
       } else {
         message.success("Đăng nhập thành công!");
-        // lưu user id vào localStorage để bảo vệ router
         localStorage.setItem("userId", user.id);
         localStorage.setItem("user", JSON.stringify(user));
 

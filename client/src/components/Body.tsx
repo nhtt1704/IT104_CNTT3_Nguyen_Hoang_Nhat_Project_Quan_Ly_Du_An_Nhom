@@ -11,10 +11,11 @@ interface Article {
   id: number;
   title: string;
   date: string;
-  category: string;
+  category?: string;
   content: string;
   image: string;
   status: string;
+  userId?: number;
 }
 
 interface Category {
@@ -22,12 +23,15 @@ interface Category {
   name: string;
 }
 
-export const Body = () => {
+interface BodyProps {
+  searchKeyword: string;
+}
+
+const Body = ({ searchKeyword }: BodyProps) => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
-
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
 
@@ -51,25 +55,37 @@ export const Body = () => {
         setArticles(sortedArticles);
         setCategories(categoryRes.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }
     };
+
     fetchData();
   }, []);
 
-  const filteredArticles =
-    selectedCategory === "All"
-      ? articles
-      : articles.filter((p) => p.category === selectedCategory);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchKeyword, selectedCategory]);
+
+  const filteredArticles = articles.filter((p) => {
+    const matchCategory =
+      selectedCategory === "All" || p.category === selectedCategory;
+
+    const matchKeyword =
+      searchKeyword === "" ||
+      p.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+      p.content.toLowerCase().includes(searchKeyword.toLowerCase());
+
+    return matchCategory && matchKeyword;
+  });
 
   const paginatedArticles = filteredArticles.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
 
-  const recentPosts = articles.slice(0, 3);
+  const recentPosts = filteredArticles.slice(0, 3);
 
   if (loading) {
     return (
@@ -92,13 +108,22 @@ export const Body = () => {
               <Link to={`/articleDetails/${recentPosts[0].id}`}>
                 <Card
                   hoverable
-                  cover={<img src={recentPosts[0].image} alt={recentPosts[0].title} />}
+                  cover={
+                    <img
+                      src={recentPosts[0].image}
+                      alt={recentPosts[0].title}
+                    />
+                  }
                   className="main-post"
                 >
                   <Text className="date">Date: {recentPosts[0].date}</Text>
                   <Title level={5}>{recentPosts[0].title}</Title>
-                  <Paragraph>{recentPosts[0].content.slice(0, 100)}...</Paragraph>
-                  <Text className="category">{recentPosts[0].category}</Text>
+                  <Paragraph>
+                    {recentPosts[0].content.slice(0, 100)}...
+                  </Paragraph>
+                  <Text className="category">
+                    {recentPosts[0].category || "Uncategorized"}
+                  </Text>
                 </Card>
               </Link>
             )}
@@ -116,7 +141,9 @@ export const Body = () => {
                     <Text className="date">Date: {post.date}</Text>
                     <Title level={5}>{post.title}</Title>
                     <Paragraph>{post.content.slice(0, 80)}...</Paragraph>
-                    <Text className="category">{post.category}</Text>
+                    <Text className="category">
+                      {post.category || "Uncategorized"}
+                    </Text>
                   </Card>
                 </Link>
               ))}
@@ -137,7 +164,9 @@ export const Body = () => {
 
         <div className="category-filters">
           <span
-            className={`filter-item ${selectedCategory === "All" ? "active" : ""}`}
+            className={`filter-item ${
+              selectedCategory === "All" ? "active" : ""
+            }`}
             onClick={() => {
               setSelectedCategory("All");
               setCurrentPage(1);
@@ -170,10 +199,12 @@ export const Body = () => {
                   cover={<img src={post.image} alt={post.title} />}
                   className="post-card"
                 >
-                    <Text className="date">Date: {post.date}</Text>
-                    <Title level={5}>{post.title}</Title>
-                    <Paragraph>{post.content.slice(0, 100)}...</Paragraph>
-                    <Text className="category">{post.category}</Text>
+                  <Text className="date">Date: {post.date}</Text>
+                  <Title level={5}>{post.title}</Title>
+                  <Paragraph>{post.content.slice(0, 100)}...</Paragraph>
+                  <Text className="category">
+                    {post.category || "Uncategorized"}
+                  </Text>
                 </Card>
               </Link>
             </Col>

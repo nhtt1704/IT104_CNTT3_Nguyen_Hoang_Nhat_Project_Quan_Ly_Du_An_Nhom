@@ -3,7 +3,6 @@ import { Layout, Row, Col, Typography, Card, Spin, Pagination } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AllMyPosts.scss";
-import Header from "./Header";
 import Footer from "./Footer";
 
 const { Title, Paragraph, Text } = Typography;
@@ -19,7 +18,11 @@ interface Article {
   status: string;
 }
 
-export const AllMyPosts = () => {
+interface AllMyPostsProps {
+  searchKeyword: string; 
+}
+
+const AllMyPosts: React.FC<AllMyPostsProps> = ({ searchKeyword }) => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +38,21 @@ export const AllMyPosts = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const paginatedArticles = articles.slice(
+  const filteredArticles = articles.filter((article) => {
+    const keyword = searchKeyword?.toLowerCase() || "";
+
+    const title = article.title?.toLowerCase() || "";
+    const category = article.category?.toLowerCase() || "";
+    const content = article.content?.toLowerCase() || "";
+
+    return (
+      title.includes(keyword) ||
+      category.includes(keyword) ||
+      content.includes(keyword)
+    );
+  });
+
+  const paginatedArticles = filteredArticles.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -50,8 +67,6 @@ export const AllMyPosts = () => {
 
   return (
     <Layout className="mypost-layout">
-      <Header />
-
       <Content className="mypost-content">
         <div className="header">
           <Title
@@ -59,45 +74,56 @@ export const AllMyPosts = () => {
             className="add-article"
             onClick={() => navigate("/addArticleHome")}
           >
-             ADD NEW ARTICLE
+            ADD NEW ARTICLE
           </Title>
         </div>
 
-        <Row gutter={[24, 24]}>
-          {paginatedArticles.map((article) => (
-            <Col xs={24} sm={12} md={8} key={article.id}>
-              <Card
-                hoverable
-                cover={<img src={article.image} alt={article.title} />}
-                className="post-card"
-              >
-                <Text className="date">Date: {article.date}</Text>
-                <Title level={5}>{article.title}</Title>
-                <Paragraph>
-                  {article.content.length > 100
-                    ? article.content.slice(0, 100) + "..."
-                    : article.content}
-                </Paragraph>
-                <div className="info-line">
-                  <Text className="category">{article.category}</Text>
-                  <Link to={`/editArticleHome/${article.id}`} className="edit-link">
-                    Edit your post
-                  </Link>
-                </div>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        {filteredArticles.length === 0 ? (
+          <div style={{ textAlign: "center", marginTop: 40 }}>
+            <Title level={4}>No posts found for “{searchKeyword}”</Title>
+          </div>
+        ) : (
+          <>
+            <Row gutter={[24, 24]}>
+              {paginatedArticles.map((article) => (
+                <Col xs={24} sm={12} md={8} key={article.id}>
+                  <Card
+                    hoverable
+                    cover={<img src={article.image} alt={article.title} />}
+                    className="post-card"
+                  >
+                    <Text className="date">Date: {article.date}</Text>
+                    <Title level={5}>{article.title}</Title>
+                    <Paragraph>
+                      {article.content.length > 100
+                        ? article.content.slice(0, 100) + "..."
+                        : article.content}
+                    </Paragraph>
+                    <div className="info-line">
+                      <Text className="category">{article.category}</Text>
+                      <Link
+                        to={`/editArticleHome/${article.id}`}
+                        className="edit-link"
+                      >
+                        Edit your post
+                      </Link>
+                    </div>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
 
-        <div className="pagination">
-          <Pagination
-            current={currentPage}
-            total={articles.length}
-            pageSize={pageSize}
-            onChange={(page) => setCurrentPage(page)}
-            showSizeChanger={false}
-          />
-        </div>
+            <div className="pagination">
+              <Pagination
+                current={currentPage}
+                total={filteredArticles.length}
+                pageSize={pageSize}
+                onChange={(page) => setCurrentPage(page)}
+                showSizeChanger={false}
+              />
+            </div>
+          </>
+        )}
       </Content>
 
       <Footer />

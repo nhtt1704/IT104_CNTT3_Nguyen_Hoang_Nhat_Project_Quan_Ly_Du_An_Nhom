@@ -6,7 +6,11 @@ import "./Header.scss";
 
 const { Search } = Input;
 
-function Header() {
+interface HeaderProps {
+  setSearchKeyword: (value: string) => void;
+}
+
+function Header({ setSearchKeyword }: HeaderProps) {
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -22,6 +26,12 @@ function Header() {
     localStorage.removeItem("userId");
     setUser(null);
     navigate("/login");
+  };
+
+  const onSearch = (value: string) => {
+    const trimmed = value.trim();
+    localStorage.setItem("searchKeyword", trimmed);
+    setSearchKeyword(trimmed);
   };
 
   const menu = (
@@ -68,6 +78,7 @@ function Header() {
           allowClear
           enterButton={<SearchOutlined />}
           size="middle"
+          onSearch={onSearch}
         />
       </div>
 

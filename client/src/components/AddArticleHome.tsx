@@ -17,6 +17,15 @@ import "./AddArticle.scss";
 const { TextArea } = Input;
 const { Title } = Typography;
 
+const getBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+  });
+};
+
 function AddArticle() {
   const [form] = Form.useForm();
   const [articles, setArticles] = useState<any[]>([]);
@@ -25,7 +34,6 @@ function AddArticle() {
 
   useEffect(() => {
     axios.get("http://localhost:8000/articles").then((res) => setArticles(res.data));
-
     axios.get("http://localhost:8000/entries").then((res) => setCategories(res.data));
   }, []);
 
@@ -39,8 +47,11 @@ function AddArticle() {
       return;
     }
 
+    let imageBase64 = "";
     const imageFile = values.upload?.[0]?.originFileObj;
-    const imageUrl = imageFile ? URL.createObjectURL(imageFile) : "";
+    if (imageFile) {
+      imageBase64 = await getBase64(imageFile);
+    }
 
     const newArticle = {
       title: values.title,
@@ -48,7 +59,7 @@ function AddArticle() {
       mood: values.mood,
       content: values.content,
       status: values.status === "public" ? "Công khai" : "Riêng tư",
-      image: imageUrl,
+      image: imageBase64,
       date: new Date().toISOString().split("T")[0],
     };
 
@@ -71,7 +82,7 @@ function AddArticle() {
         <Form.Item
           label="Title:"
           name="title"
-          rules={[{  message: "Không được để trống tiêu đề!" }]}
+          rules={[{ message: "Không được để trống tiêu đề!" }]}
         >
           <Input placeholder="Enter article title" />
         </Form.Item>
@@ -79,7 +90,7 @@ function AddArticle() {
         <Form.Item
           label="Article Categories:"
           name="category"
-          rules={[{  message: "Vui lòng chọn category!" }]}
+          rules={[{ message: "Vui lòng chọn category!" }]}
         >
           <Select placeholder="Select category">
             {categories.map((cat) => (
@@ -93,7 +104,7 @@ function AddArticle() {
         <Form.Item
           label="Mood:"
           name="mood"
-          rules={[{  message: "Vui lòng chọn mood!" }]}
+          rules={[{ message: "Vui lòng chọn mood!" }]}
         >
           <Select placeholder="Select mood">
             <Select.Option value="Căng thẳng">😡 Căng thẳng</Select.Option>
@@ -105,7 +116,7 @@ function AddArticle() {
         <Form.Item
           label="Content:"
           name="content"
-          rules={[{  message: "Không được để trống nội dung!" }]}
+          rules={[{ message: "Không được để trống nội dung!" }]}
         >
           <TextArea rows={4} placeholder="Write your content here..." />
         </Form.Item>
@@ -113,7 +124,7 @@ function AddArticle() {
         <Form.Item
           label="Status:"
           name="status"
-          rules={[{  message: "Vui lòng chọn trạng thái!" }]}
+          rules={[{ message: "Vui lòng chọn trạng thái!" }]}
         >
           <Radio.Group>
             <Radio value="public">Public</Radio>

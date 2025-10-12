@@ -44,8 +44,26 @@
         color: #555;
         line-height: 1.4;
       }
+
+      .date {
+        display: block;
+        font-size: 13px;
+        color: #999;
+        margin-top: 5px;
+      }
+
+      .category {
+        display: inline-block;
+        background: #f0f0f0;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-top: 5px;
+      }
     }
   }
+
+  /* ❌ Bỏ phần &__image */
 
   &__actions {
     margin-top: 15px;

@@ -6,13 +6,13 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import AddArticle from "../components/AddArticle";
 import ArticleDetails from "../components/ArticleDetails";
 import Home from "../components/Home";
-import AllMyPosts from "../components/AllMyPosts";
 import AdminEntries from "../pages/admin/AdminEntries";
 import AdminUser from "../pages/admin/AdminUser";
 import AdminArticle from "../pages/admin/AdminArticle";
 import EditArticle from "../components/EditArticle";
 import AddArticleHome from "../components/AddArticleHome";
 import EditArticleHome from "../components/EditArticleHome";
+import AllMyPostsHome from "../components/AllMyPostsHome";
 
 export const routers = createBrowserRouter([
   {
@@ -37,7 +37,7 @@ export const routers = createBrowserRouter([
     },
     {
         path: "/allMyPosts",
-        element: <AllMyPosts></AllMyPosts>,
+        element: <AllMyPostsHome></AllMyPostsHome>,
     },
     {
         path: "/admin/users",

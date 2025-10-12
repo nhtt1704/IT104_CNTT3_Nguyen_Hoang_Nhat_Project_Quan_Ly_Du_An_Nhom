@@ -16,12 +16,11 @@ interface Article {
   date: string;
   category: string;
   content: string;
-  image: string;
   status: string;
 }
 
 function ArticleDetails() {
-  const { id } = useParams<{ id: string }>(); 
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
@@ -84,9 +83,6 @@ function ArticleDetails() {
           </div>
         </div>
 
-        <div className="post-detail__image">
-          <img src={article.image} alt={article.title} />
-        </div>
 
         <div className="post-detail__actions">
           <Button icon={<LikeOutlined />} type="text">

@@ -41,7 +41,6 @@ export default function ManageArticle() {
 
   const navigate = useNavigate();
 
-  // 🧹 Hàm logout
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
@@ -168,7 +167,6 @@ export default function ManageArticle() {
             </div>
             <span>Manage Article</span>
           </Link>
-          {/* 🔸 Nút Logout đổi từ Link sang Button */}
           <div className="menu-item logout" onClick={handleLogout}>
             <div className="icon-box">
               <LogoutOutlined className="icon" />
