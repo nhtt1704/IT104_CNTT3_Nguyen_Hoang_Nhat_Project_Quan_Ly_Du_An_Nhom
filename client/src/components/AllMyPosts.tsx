@@ -42,13 +42,9 @@ const AllMyPosts: React.FC<AllMyPostsProps> = ({ searchKeyword }) => {
     const keyword = searchKeyword?.toLowerCase() || "";
 
     const title = article.title?.toLowerCase() || "";
-    const category = article.category?.toLowerCase() || "";
-    const content = article.content?.toLowerCase() || "";
 
     return (
-      title.includes(keyword) ||
-      category.includes(keyword) ||
-      content.includes(keyword)
+      title.includes(keyword) 
     );
   });
 

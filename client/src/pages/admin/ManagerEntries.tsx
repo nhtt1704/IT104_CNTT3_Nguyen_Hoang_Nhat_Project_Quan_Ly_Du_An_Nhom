@@ -191,7 +191,7 @@ const ManagerEntries: React.FC = () => {
               <Form.Item
                 label="Category Name"
                 name="name"
-                rules={[{ message: "Please input category name!" }]}
+                rules={[{required:true, message: "Please input category name!" }]}
               >
                 <Input />
               </Form.Item>

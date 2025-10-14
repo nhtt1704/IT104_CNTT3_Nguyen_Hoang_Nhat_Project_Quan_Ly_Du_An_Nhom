@@ -76,7 +76,7 @@ export default function EditArticle() {
         <Form.Item
           label="Title:"
           name="title"
-          rules={[{ message: "Không được để trống tiêu đề!" }]}
+          rules={[{required:true, message: "Không được để trống tiêu đề!" }]}
         >
           <Input />
         </Form.Item>
@@ -92,7 +92,7 @@ export default function EditArticle() {
         <Form.Item
           label="Content:"
           name="content"
-          rules={[{ message: "Không được để trống nội dung!" }]}
+          rules={[{required:true, message: "Không được để trống nội dung!" }]}
         >
           <TextArea rows={4} />
         </Form.Item>

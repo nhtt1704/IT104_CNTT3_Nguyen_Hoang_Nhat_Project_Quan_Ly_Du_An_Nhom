@@ -35,9 +35,9 @@ const Login: React.FC = () => {
       const user = users.find((u: any) => u.email === email);
 
       if (!user) {
-        setError("Email không tồn tại");
+        setError("Email hoặc mật khẩu không đúng");
       } else if (user.password !== password) {
-        setError("Mật khẩu không đúng");
+        setError("Email hoặc mật khẩu không đúng");
       } else {
         message.success("Đăng nhập thành công!");
         localStorage.setItem("userId", user.id);

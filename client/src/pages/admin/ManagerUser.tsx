@@ -113,9 +113,7 @@ const ManagerUser: React.FC = () => {
   const filteredData = users.filter((user) => {
     const search = searchText?.toLowerCase() || "";
     return (
-      user.name?.toLowerCase().includes(search) ||
-      user.username?.toLowerCase().includes(search) ||
-      user.email?.toLowerCase().includes(search)
+      user.name?.toLowerCase().includes(search) 
     );
   });
 

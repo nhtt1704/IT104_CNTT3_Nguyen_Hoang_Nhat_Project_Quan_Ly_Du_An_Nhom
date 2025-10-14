@@ -74,8 +74,7 @@ const Body = ({ searchKeyword }: BodyProps) => {
 
     const matchKeyword =
       searchKeyword === "" ||
-      p.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      p.content.toLowerCase().includes(searchKeyword.toLowerCase());
+      p.title.toLowerCase().includes(searchKeyword.toLowerCase()) 
 
     return matchCategory && matchKeyword;
   });

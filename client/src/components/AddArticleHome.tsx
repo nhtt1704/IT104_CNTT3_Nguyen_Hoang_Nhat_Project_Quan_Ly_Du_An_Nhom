@@ -82,7 +82,7 @@ function AddArticle() {
         <Form.Item
           label="Title:"
           name="title"
-          rules={[{ message: "Không được để trống tiêu đề!" }]}
+          rules={[{required:true, message: "Không được để trống tiêu đề!" }]}
         >
           <Input placeholder="Enter article title" />
         </Form.Item>
@@ -90,7 +90,7 @@ function AddArticle() {
         <Form.Item
           label="Article Categories:"
           name="category"
-          rules={[{ message: "Vui lòng chọn category!" }]}
+          rules={[{required:true, message: "Vui lòng chọn category!" }]}
         >
           <Select placeholder="Select category">
             {categories.map((cat) => (
@@ -104,7 +104,7 @@ function AddArticle() {
         <Form.Item
           label="Mood:"
           name="mood"
-          rules={[{ message: "Vui lòng chọn mood!" }]}
+          rules={[{required:true, message: "Vui lòng chọn mood!" }]}
         >
           <Select placeholder="Select mood">
             <Select.Option value="Căng thẳng">😡 Căng thẳng</Select.Option>
@@ -116,7 +116,7 @@ function AddArticle() {
         <Form.Item
           label="Content:"
           name="content"
-          rules={[{ message: "Không được để trống nội dung!" }]}
+          rules={[{required:true, message: "Không được để trống nội dung!" }]}
         >
           <TextArea rows={4} placeholder="Write your content here..." />
         </Form.Item>
@@ -124,7 +124,7 @@ function AddArticle() {
         <Form.Item
           label="Status:"
           name="status"
-          rules={[{ message: "Vui lòng chọn trạng thái!" }]}
+          rules={[{required:true, message: "Vui lòng chọn trạng thái!" }]}
         >
           <Radio.Group>
             <Radio value="public">Public</Radio>

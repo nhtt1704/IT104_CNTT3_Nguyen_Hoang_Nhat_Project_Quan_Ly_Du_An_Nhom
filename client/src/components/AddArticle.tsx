@@ -17,7 +17,6 @@ import "./AddArticle.scss";
 const { TextArea } = Input;
 const { Title } = Typography;
 
-// 🔸 Hàm convert ảnh sang base64
 const getBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -44,7 +43,7 @@ function AddArticle() {
         article.title.toLowerCase().trim() === values.title.toLowerCase().trim()
     );
     if (isExist) {
-      message.error("Tên bài viết đã tồn tại!");
+      form.setFields([{ name: "title", errors: ["Tên bài viết đã tồn tại!"] }]);
       return;
     }
 
@@ -83,7 +82,7 @@ function AddArticle() {
         <Form.Item
           label="Title:"
           name="title"
-          rules={[{ required: true, message: "Không được để trống tiêu đề!" }]}
+          rules={[{required:true, message: "Không được để trống tiêu đề!" }]}
         >
           <Input placeholder="Enter article title" />
         </Form.Item>
@@ -91,7 +90,7 @@ function AddArticle() {
         <Form.Item
           label="Article Categories:"
           name="category"
-          rules={[{ required: true, message: "Vui lòng chọn category!" }]}
+          rules={[{required:true, message: "Vui lòng chọn category!" }]}
         >
           <Select placeholder="Select category">
             {categories.map((cat) => (
@@ -105,7 +104,7 @@ function AddArticle() {
         <Form.Item
           label="Mood:"
           name="mood"
-          rules={[{ required: true, message: "Vui lòng chọn mood!" }]}
+          rules={[{required:true, message: "Vui lòng chọn mood!" }]}
         >
           <Select placeholder="Select mood">
             <Select.Option value="Căng thẳng">😡 Căng thẳng</Select.Option>
@@ -117,7 +116,7 @@ function AddArticle() {
         <Form.Item
           label="Content:"
           name="content"
-          rules={[{ required: true, message: "Không được để trống nội dung!" }]}
+          rules={[{required:true, message: "Không được để trống nội dung!" }]}
         >
           <TextArea rows={4} placeholder="Write your content here..." />
         </Form.Item>
@@ -125,7 +124,7 @@ function AddArticle() {
         <Form.Item
           label="Status:"
           name="status"
-          rules={[{ required: true, message: "Vui lòng chọn trạng thái!" }]}
+          rules={[{required:true, message: "Vui lòng chọn trạng thái!" }]}
         >
           <Radio.Group>
             <Radio value="public">Public</Radio>

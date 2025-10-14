@@ -6,6 +6,7 @@ import "./Register.scss";
 function Register() {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
     const { firstName, lastName, email, password, confirmPassword } = values;
@@ -21,16 +22,20 @@ function Register() {
       const checkUser = await axios.get(
         `http://localhost:8000/users?email=${email}`
       );
+
       if (checkUser.data.length > 0) {
-        message.error("Email này đã được đăng ký!");
+        form.setFields([
+          {
+            name: "email",
+            errors: ["Email này đã được đăng ký!"],
+          },
+        ]);
         setLoading(false);
         return;
       }
 
       const name = `${firstName.trim()} ${lastName.trim()}`;
-
       const username = `@${lastName.trim().toLowerCase().replace(/\s+/g, "")}`;
-
       const status = "hoạt động";
 
       await axios.post("http://localhost:8000/users", {
@@ -42,6 +47,7 @@ function Register() {
       });
 
       setIsModalVisible(true);
+      form.resetFields();
     } catch (error) {
       console.error(error);
       message.error("Đăng ký thất bại, vui lòng thử lại!");
@@ -64,12 +70,17 @@ function Register() {
         </div>
 
         <div className="register-form-box">
-          <Form layout="vertical" onFinish={onFinish} validateTrigger="onSubmit">
+          <Form
+            form={form} 
+            layout="vertical"
+            onFinish={onFinish}
+            validateTrigger="onSubmit"
+          >
             <div className="name-fields">
               <Form.Item
                 name="firstName"
                 label="FirstName"
-                rules={[{  message: "Họ không được để trống" }]}
+                rules={[{ required: true, message: "Họ không được để trống" }]}
               >
                 <Input />
               </Form.Item>
@@ -77,7 +88,7 @@ function Register() {
               <Form.Item
                 name="lastName"
                 label="LastName"
-                rules={[{  message: "Tên không được để trống" }]}
+                rules={[{ required: true, message: "Tên không được để trống" }]}
               >
                 <Input />
               </Form.Item>
@@ -87,7 +98,7 @@ function Register() {
               name="email"
               label="Email"
               rules={[
-                {  message: "Email không được để trống" },
+                { required: true, message: "Email không được để trống" },
                 { type: "email", message: "Email phải đúng định dạng" },
               ]}
             >
@@ -98,7 +109,7 @@ function Register() {
               name="password"
               label="Password"
               rules={[
-                {  message: "Mật khẩu không được để trống" },
+                { required: true, message: "Mật khẩu không được để trống" },
                 { min: 6, message: "Mật khẩu tối thiểu 6 ký tự" },
               ]}
             >
@@ -111,7 +122,7 @@ function Register() {
               dependencies={["password"]}
               rules={[
                 {
-                  
+                  required: true,
                   message: "Mật khẩu xác nhận không được để trống",
                 },
                 ({ getFieldValue }) => ({
@@ -119,7 +130,9 @@ function Register() {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error("Mật khẩu phải trùng khớp"));
+                    return Promise.reject(
+                      new Error("Mật khẩu phải trùng khớp")
+                    );
                   },
                 }),
               ]}
@@ -149,7 +162,7 @@ function Register() {
         centered
       >
         <h2 style={{ textAlign: "center", color: "#52c41a" }}>
-           Đăng ký thành công
+          Đăng ký thành công
         </h2>
         <p style={{ textAlign: "center" }}>
           Bạn sẽ được chuyển đến trang đăng nhập ngay bây giờ
